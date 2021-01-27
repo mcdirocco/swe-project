@@ -2,11 +2,11 @@ import express from "express";
 import User from '../models/users.js';
 import crypto from 'crypto';
 
-const router = express.Router();
+const user = express.Router();
 
 // --- Return List of Current Users ---
 
-router.get('/', async (req, res) => {
+user.get('/', async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 
 // --- Create New User ---
 
-router.post('/', async (req, res) => {
+user.post('/', async (req, res) => {
     let salt = crypto.randomBytes(16).toString('base64');
     let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
     req.body['password'] = salt + "$" + hash;
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
 // --- Get User By Id ---
 
-router.get('/:userId', async (req, res) => {
+user.get('/:userId', async (req, res) => {
     try {
         console.log(req.params['userId']);
         const users = await User.findById(req.params['userId']);
@@ -52,7 +52,7 @@ router.get('/:userId', async (req, res) => {
 
 // --- Delete User By Id ---
 
-router.delete('/:userId', async (req, res) => {
+user.delete('/:userId', async (req, res) => {
     try {
         const deleteUser = await User.deleteOne({ _id: req.params['userId'] });
         res.json(deleteUser);
@@ -64,7 +64,7 @@ router.delete('/:userId', async (req, res) => {
 
 // --- Update User ---
 
-router.patch('/:userId', async (req, res) => {
+user.patch('/:userId', async (req, res) => {
     try {
         const updateUser = await User.updateOne({ _id: req.params['userId'] }, { $set: { firstname: req.body['name'] }});
         res.json(updateUser);
@@ -74,4 +74,4 @@ router.patch('/:userId', async (req, res) => {
     }
 });
 
-export default router;
+export default user;
