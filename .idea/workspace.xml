@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8279c9f-0669-4c00-8dec-d69c6cee86c6" name="Default Changelist" comment="23-Jan-2021&#10;-----------&#10;Restructured repo - include frontend and backend folders">
-      <change afterPath="$PROJECT_DIR$/backend/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/users.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/routes/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +51,7 @@
       <recent name="C:\Users\Max\Documents\GitHub\swe-project\frontend" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.backend start">
+  <component name="RunManager" selected="npm.frontend start">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -99,6 +93,8 @@
       <workItem from="1611430453052" duration="11000" />
       <workItem from="1611430466081" duration="2110000" />
       <workItem from="1611433364465" duration="5756000" />
+      <workItem from="1611678545082" duration="916000" />
+      <workItem from="1612282659672" duration="1397000" />
     </task>
     <task id="LOCAL-00001" summary="19-Jan-2021&#10;-----------&#10;First commit">
       <created>1611106504802</created>
