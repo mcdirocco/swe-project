@@ -5,4 +5,4 @@ workflows:
   node-tests:
     jobs:
       - node/test
-app-dir: backend/
+app-dir: /home/circleci/project/backend/
