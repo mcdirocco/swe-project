@@ -2,7 +2,7 @@ const AdminPortal = () => {
     return (
       <div className="App">
         <header className="App-header">
-          Login comp
+          Admin Portal is showing
         </header>
       </div>
     );

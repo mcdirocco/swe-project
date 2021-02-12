@@ -2,7 +2,7 @@ const SignUp = () => {
     return (
       <div className="App">
         <header className="App-header">
-          Register comp
+          Sign Up Page
         </header>
       </div>
     );
