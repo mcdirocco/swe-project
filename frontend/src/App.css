@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #5C5C78;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+
+/*making a comment*/
+
+/* this is a comment made by Nick to make sure he can push to the master branch */
