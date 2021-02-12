@@ -2,7 +2,7 @@ const AccountDetails = () => {
     return (
       <div className="App">
         <header className="App-header">
-          Login comp
+          Account Details Page
         </header>
       </div>
     );
