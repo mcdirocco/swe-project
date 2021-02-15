@@ -1,3 +1,4 @@
+app-dir: ~/project/backend/
 jobs:
   test:
     working_directory: ~/project/backend/
