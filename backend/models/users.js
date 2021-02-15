@@ -25,6 +25,10 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    points: {
+      type: Number,
+      default: 0,
+    },
 });
 
 export default mongoose.model('Users', UserSchema);

@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config.js';
 import userRoutes from './routes/users.js';
+import eventRoutes from './routes/events.js';
 
 const app = express();
 
@@ -10,6 +11,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use('/users', userRoutes);
+app.use('/events', eventRoutes);
+
 
 // --- Routes ---
 
