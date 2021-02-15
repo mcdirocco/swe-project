@@ -1,16 +1,18 @@
 jobs:
+  app-dir: ~/project/backend/
   test:
     executor: node/default
     steps:
       - checkout
       - node/install-packages:
-          cache-path: ~/backend/node_modules
+          app-dir: ~/project/backend/
+          cache-path: ~/project/backend/node_modules
           override-ci-command: npm install
-      - run: mocha server.test.js
-version: 2.1
+      - run: cd ~/project/backend/ ; npm run test
 orbs:
   node: circleci/node@4.1.0
+version: 2.1
 workflows:
-  test-and-deploy:
+  test:
     jobs:
-      - node/test
+      - test
