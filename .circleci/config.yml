@@ -1,4 +1,3 @@
-app-dir: ~/project/backend/
 jobs:
   test:
     working_directory: /home/circleci/project/backend/
@@ -7,6 +6,7 @@ jobs:
       - checkout
       - run: cd /backend/
       - node/install-packages:
+          app-dir: ~/project/backend/
           cache-path: ~/project/backend/node_modules
           override-ci-command: npm install
       - run: mocha server.test.js
