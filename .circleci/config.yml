@@ -17,7 +17,7 @@ jobs:
           app-dir: ~/project/backend/
           cache-path: ~/project/backend/node_modules
           override-ci-command: npm install
-      - run: cd ~/project/backend/ ; npm start
+      - run: cd ~/project/backend/ ; npm start ; exit ;
 orbs:
   node: circleci/node@4.1.0
 version: 2.1
