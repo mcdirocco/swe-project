@@ -4,7 +4,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          cache-path: ~/backend/node_modules
+          cache-path: ~/project/backend/node_modules
           override-ci-command: npm install
       - run: mocha server.test.js
 version: 2.1
