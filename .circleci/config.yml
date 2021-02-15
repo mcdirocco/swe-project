@@ -1,5 +1,6 @@
 jobs:
   test:
+    working_directory: ~/project/backend/
     executor: node/default
     steps:
       - checkout
