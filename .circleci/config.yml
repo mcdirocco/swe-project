@@ -9,6 +9,15 @@ jobs:
           cache-path: ~/project/backend/node_modules
           override-ci-command: npm install
       - run: cd ~/project/backend/ ; npm run test
+  run:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          app-dir: ~/project/backend/
+          cache-path: ~/project/backend/node_modules
+          override-ci-command: npm install
+      - run: cd ~/project/backend/ ; npm start
 orbs:
   node: circleci/node@4.1.0
 version: 2.1
@@ -16,3 +25,4 @@ workflows:
   test:
     jobs:
       - test
+      - run
