@@ -1,7 +1,7 @@
-app-dir: ~/project/backend/
+app-dir: /home/circleci/project/backend/
 jobs:
   test:
-    working_directory: ~/project/backend/
+    working_directory: /home/circleci/project/backend/
     executor: node/default
     steps:
       - checkout
