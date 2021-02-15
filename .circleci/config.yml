@@ -1,10 +1,11 @@
-app-dir: /home/circleci/project/backend/
+app-dir: ~/project/backend/
 jobs:
   test:
     working_directory: /home/circleci/project/backend/
     executor: node/default
     steps:
       - checkout
+      - run: cd /backend/
       - node/install-packages:
           cache-path: ~/project/backend/node_modules
           override-ci-command: npm install
