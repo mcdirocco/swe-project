@@ -1,3 +1,4 @@
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,8 +6,50 @@
 
 }
 
-.NavbarItems {
-    background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%);
-    height: 80px;
+.navMenu-links {        /* handles the individual item-line links*/
+
+    /*background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%);*/
+    height: 50px;
+    text-decoration: none;
 
 }
+
+.NavbarMenuItems {      /* handles the big navbar box*/
+    background-image: url('background_1.svg');
+    justify-content: left;
+      /* make this 4px or something, cause 20 shows the bullet points on the left side*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.UnorderdNavBarList { /* main list of the links (ul)*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    list-style-type: none;
+}
+
+.InnerMapList {  /* li */
+    text-justify: none;
+    padding: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-color: #EEEEEE;
+    border-radius: 7%;
+    width: 10%;
+}
+
+/*
+make the options for links to across the top bar, and so that there is a little bit of
+    white around them so they don't look constricted
+
+    Also, make the background one pic, not split up into 5 images next to each other.  It looks bad.
+
+Bullet points exist, but you cannot see them due to the background.  Find out how to remove them,
+    because if someone resizes, they might show up again and be ugly.  I think it is because
+    NavMenuItems was implemented as a list [].  Is there another way to implement this to remove
+    the bullet points?
+    -Nick
+ */

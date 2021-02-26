@@ -23,11 +23,6 @@ export const NavMenuItems = [      //implement as a list
         cName: 'navMenu-links',
     },
     {
-        title: 'SignUpPage',
-        url: '/SignUp',
-        cName: 'navMenu-links',
-    },
-    {
         title: 'LandingPage',       //landing or home page
         url: '/Landing',
         cName: 'navMenu-links',

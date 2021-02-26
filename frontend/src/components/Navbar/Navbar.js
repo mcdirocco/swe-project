@@ -6,14 +6,14 @@ class Navbar extends React.Component {
     render() {
         return (
             <nav className="NavbarMenuItems">
-                <h1 className="navbar-logo">Our Super Dope SWE Project<i className="fab fa-react"></i></h1>
+                <h1 className="navbar-logo"/>
                 <div className="menu-icon">
 
                 </div>
-                <ul>
+                <ul className='UnorderdNavBarList'>
                     {NavMenuItems.map((item, index) => {
                         return (
-                            <li key={index}>
+                            <li className='InnerMapList' key={index}>
                                 <a className={item.cName} href={item.url}>
                                 {item.title}
                                 </a>
