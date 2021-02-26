@@ -1,38 +1,47 @@
-
 * {
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
     margin: 0;
     padding: 0;
-
 }
 
 .navMenu-links {        /* handles the individual item-line links*/
 
     /*background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%);*/
-    height: 50px;
+    /*height: 50px;*/
     text-decoration: none;
-
+    color: black;
 }
 
-.NavbarMenuItems {      /* handles the big navbar box*/
+.NavbarContainer {      /* handles the big navbar box*/
     background-image: url('background_1.svg');
-    justify-content: left;
+    /*justify-content: left;*/
       /* make this 4px or something, cause 20 shows the bullet points on the left side*/
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: #5a5377;
+    padding-bottom: 1px;
+    /*margin: 1vh;*/
+    /*border-radius: 3vh;*/
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 }
 
 
-.UnorderdNavBarList { /* main list of the links (ul)*/
+.NavbarMenuItems { /* main list of the links (ul)*/
     display: flex;
+    flex: 1;
     flex-direction: row;
+    align-items: center;
     justify-content: space-evenly;
     list-style-type: none;
 }
 
 .InnerMapList {  /* li */
     text-justify: none;
+    align-items: center;
     padding: 1%;
     margin-top: 1%;
     margin-bottom: 1%;

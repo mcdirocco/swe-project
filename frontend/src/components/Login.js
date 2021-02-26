@@ -4,12 +4,10 @@ import { Container, Row, Col } from "react-bootstrap";
 const Login = () => {
     return (
       <div className="LoginClassName">
-
           <Container>
-
               <Row>
-                  <Col>Login Component</Col>
-                  <Col>Sign Up Component</Col>
+                  <Col><p style={{color: "white"}}>Login Component</p></Col>
+                  <Col><p style={{color: "white"}}>Sign Up Component</p></Col>
               </Row>
           </Container>
       </div>
