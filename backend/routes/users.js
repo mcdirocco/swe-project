@@ -1,6 +1,6 @@
 import express from "express";
 import User from '../models/users.js';
-import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
 const user = express.Router();
 
@@ -18,16 +18,23 @@ user.get('/', async (req, res) => {
 
 // --- Create New User ---
 
-user.post('/', async (req, res) => {
-    let salt = crypto.randomBytes(16).toString('base64');
-    let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-    req.body['password'] = salt + "$" + hash;
+user.post('/create', async (req, res) => {
+    const existingUser = await User.findOne({username: req.body.username});
+    if(existingUser !== null)
+    {
+        res.json({ message: "Username already exists."});
+        return;
+    }
+
+    const salt = await bcrypt.genSalt(12);
+    const hash = await bcrypt.hash(req.body.password, salt);
+
     const user = new User({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password,
+        password: hash,
     });
     try {
         const saveUser = await user.save();
@@ -69,6 +76,22 @@ user.patch('/:userId', async (req, res) => {
     try {
         const updateUser = await User.updateOne({ _id: req.params['userId'] }, { $set: { firstname: req.body['name'] }});
         res.json(updateUser);
+    }
+    catch (err) {
+        res.json({ message: err });
+    }
+});
+
+// --- Login to Existing User ---
+
+user.post('/login', async (req, res) => {
+    try {
+        const loginUser = await User.findOne({username: req.body.username});
+        if(loginUser !== null) {
+            const passvalid = await bcrypt.compare(req.body.password, loginUser.password);
+            res.json(passvalid);
+        }
+        res.json({ message: "No user found" });
     }
     catch (err) {
         res.json({ message: err });
