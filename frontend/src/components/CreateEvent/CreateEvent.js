@@ -17,7 +17,7 @@ onSubmit = async (e) => {
   e.preventDefault();
   console.log("feet")
   let res = await fetch(
-    'http://66.231.152.109:3001/events/create',
+    //took out IP for security
     {
       credentials: 'omit',
       headers: {
