@@ -13,6 +13,8 @@ import Landing from "./components/Landing";
 import Login from "./components/Login";
 import MemberData from "./components/MemberData";
 import AccountDetails from "./components/AccountDetails";
+import SignUp from "./components/SignUp";
+import CreateEvent from "./components/CreateEvent/CreateEvent"
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Route path="/AccountDetails" component={AccountDetails} />
         <Route path="/SignUp" component={Login} />
         <Route path="/Landing" component={Landing} />
+        <Route path="/CreateEvent" component={CreateEvent} />
+
       </Router>
     </section>
 

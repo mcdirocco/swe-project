@@ -3,9 +3,12 @@ import React, { Component } from 'react'
 import { Calendar, momentLocalizer} from 'react-big-calendar'
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import CreateEvent from './CreateEvent/CreateEvent';
 const localizer = momentLocalizer(moment);
 
 class Landing extends Component {
+
+  
   //add the events from DB in here
   state = {
     events: [
@@ -26,6 +29,7 @@ class Landing extends Component {
   render() {
     return (
       <div className="App">
+        <div>
         <Calendar
           localizer={localizer}
           defaultDate={new Date()}
@@ -33,7 +37,11 @@ class Landing extends Component {
           events={this.state.events}
           style={{ display: "flex", margin: "3vh", padding: "2vh", borderRadius: '2vh', height: "100vh", backgroundColor: "#EEEEEE"}}
         />
+        </div>
+          <a class="button" href='/CreateEvent'>HI</a>
+          
       </div>
+            
     );
   }
 }
