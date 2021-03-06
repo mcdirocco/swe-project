@@ -35,7 +35,7 @@ class Landing extends Component {
           defaultDate={new Date()}
           defaultView="month"
           events={this.state.events}
-          style={{ height: "100vh" }}
+          style={{ display: "flex", margin: "3vh", padding: "2vh", borderRadius: '2vh', height: "100vh", backgroundColor: "#EEEEEE"}}
         />
         </div>
           <a class="button" href='/CreateEvent'>HI</a>
@@ -46,4 +46,4 @@ class Landing extends Component {
   }
 }
 
-  export default Landing;
+export default Landing;

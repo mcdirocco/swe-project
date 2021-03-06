@@ -3,32 +3,27 @@
 
 export const NavMenuItems = [      //implement as a list
     {
-        title: 'AdminPortal',
+        title: 'Admin Portal',
         url: '/AdminPortal',
         cName: 'navMenu-links',      //way to import classNames without having to manually type it in
     },
     {
-        title: 'ViewMemberData',
+        title: 'View Member Data',
         url: '/MemberData',
         cName: 'navMenu-links',
     },
     {
-        title: 'LoginPage',
+        title: 'Login Page',
         url: '/Login',
         cName: 'navMenu-links',
     },
     {
-        title: 'AccountPage',
+        title: 'Account Page',
         url: '/AccountDetails',
         cName: 'navMenu-links',
     },
     {
-        title: 'SignUpPage',
-        url: '/SignUp',
-        cName: 'navMenu-links',
-    },
-    {
-        title: 'LandingPage',       //landing or home page
+        title: 'Landing Page',       //landing or home page
         url: '/Landing',
         cName: 'navMenu-links',
     },
