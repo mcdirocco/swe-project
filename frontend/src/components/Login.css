@@ -1,0 +1,38 @@
+.LoginMainPage-header {
+    height: 100%;
+
+}
+
+.LoginClassName {
+    background-color: #5a5377;
+    min-height: 100vh;
+}
+
+.TopLoginRow{
+    height: 50px;
+    border-bottom: 60px solid;
+
+}
+
+.LeftLoginCol{
+    height: 50px;
+}
+
+.RightLoginCol {
+    height: 50px;
+
+}
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+*/
