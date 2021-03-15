@@ -21,6 +21,14 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    major: {
+        type: String,
+        required: true,
+    },
+    year: {
+        type: Number,
+        required: true,
+    },
     admin: {
         type: Boolean,
         default: false,
