@@ -1,33 +1,52 @@
-import './CreateEvent.css';
-import React, {useState} from 'react';
-import Form from 'react-bootstrap/Form';
-import {Button} from 'react-bootstrap';
-import { createEvent } from "../../API";
+import './CreateEvent.css'
+import React from 'react'; 
+import Form from 'react-bootstrap/Form' 
+import {Button} from 'react-bootstrap'
+import moment from "moment";
 
-class Popup extends React.Component {
+class Popup extends React.Component {  
 
   state = {
-    title: "poop",
-    description: "feet",
-    date: Date.now(),
+    title: "Title",
+    description: "Description",
+    date: undefined,
+    end: undefined,
     startTime: undefined,
     endTime: undefined
   };
-
+//GENERATE RANDOM CODE TO BE DISPLAYED
 onSubmit = async (e) => {
   e.preventDefault();
-  let res = await createEvent(
-      this.state.title,
-      this.state.description,
-      this.state.date,
-      this.state.startTime,
-      this.state.endTime
+  console.log("feet")
+  console.log(this.state.start)
+  var dateIn = moment(this.state.start);
+  this.setState({start: dateIn})
+  let res = await fetch(
+    'http://www.maxdirocco.com/events/create',
+    {
+      credentials: 'omit',
+      headers: {
+        accept: 'application/json, text/javascript, */*; q=0.01',
+        'accept-language': 'en-US,en;q=0.9',
+        'content-type': 'application/json;charset=UTF-8',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'cross-site',
+      },
+      referrerPolicy: 'no-referrer-when-downgrade',
+      body: JSON.stringify(this.state),
+      method: 'POST', //change to post and add body to add an event
+      mode: 'cors',
+    },
   );
+  res = await res.json();  
   console.log(res);
 }
 
-  render() {
-    return (
+  render() {  
+    return (  
+      <div class="container">
+        <div class="row test">
+          <div class="col-md-4 offset-md-4 design">
       <Form onSubmit={this.onSubmit}>
       <Form.Group controlId="formBasicTitle">
         <Form.Label>Title</Form.Label>
@@ -53,14 +72,16 @@ onSubmit = async (e) => {
         <Form.Label>End Time</Form.Label>
         <Form.Control type="time" value={this.state.endTime} onChange={e => this.setState({endTime: e.target.value})}/>
       </Form.Group>
-
+      
       <Button variant="primary" type="submit">
         Submit
       </Button>
     </Form>
-
-    );
-  }
-}
+    </div>
+      </div>
+      </div>
+    );  
+}  
+}  
 
 export default Popup;

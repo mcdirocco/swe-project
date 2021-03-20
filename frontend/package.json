@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
@@ -10,6 +11,7 @@
     "components": "^0.1.0",
     "dates": "^1.1.0",
     "events": "^3.2.0",
+    "material-ui": "^0.20.2",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-big-calendar": "^0.31.0",
@@ -17,6 +19,7 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "reactjs-popup": "^2.0.4",
     "styled": "^1.0.0",
     "web-vitals": "^0.2.4"
   },
