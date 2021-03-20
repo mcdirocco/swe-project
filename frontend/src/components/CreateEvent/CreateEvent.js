@@ -2,22 +2,27 @@ import './CreateEvent.css'
 import React from 'react'; 
 import Form from 'react-bootstrap/Form' 
 import {Button} from 'react-bootstrap'
+import moment from "moment";
 
 class Popup extends React.Component {  
 
   state = {
-    title: "poop",
-    description: "feet",
+    title: "Title",
+    description: "Description",
     date: undefined,
+    end: undefined,
     startTime: undefined,
     endTime: undefined
   };
-
+//GENERATE RANDOM CODE TO BE DISPLAYED
 onSubmit = async (e) => {
   e.preventDefault();
   console.log("feet")
+  console.log(this.state.start)
+  var dateIn = moment(this.state.start);
+  this.setState({start: dateIn})
   let res = await fetch(
-    //took out IP for security
+    'http://www.maxdirocco.com/events/create',
     {
       credentials: 'omit',
       headers: {
@@ -29,7 +34,7 @@ onSubmit = async (e) => {
       },
       referrerPolicy: 'no-referrer-when-downgrade',
       body: JSON.stringify(this.state),
-      method: 'POST',
+      method: 'POST', //change to post and add body to add an event
       mode: 'cors',
     },
   );
@@ -39,6 +44,9 @@ onSubmit = async (e) => {
 
   render() {  
     return (  
+      <div class="container">
+        <div class="row test">
+          <div class="col-md-4 offset-md-4 design">
       <Form onSubmit={this.onSubmit}>
       <Form.Group controlId="formBasicTitle">
         <Form.Label>Title</Form.Label>
@@ -69,7 +77,9 @@ onSubmit = async (e) => {
         Submit
       </Button>
     </Form>
-
+    </div>
+      </div>
+      </div>
     );  
 }  
 }  
