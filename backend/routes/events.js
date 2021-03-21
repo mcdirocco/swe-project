@@ -87,7 +87,6 @@ event.post('/attend', async (req, res) => {
 
     event.attendees.push(user._id);
     user.attendedEvents.push(event._id);
-    console.log(event.attendees);
 
     const eventAttendee = await Event.updateOne({_id: event._id}, {
         $set: {
