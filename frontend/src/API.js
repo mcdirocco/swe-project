@@ -51,7 +51,7 @@ export async function loginUser(username, password) {
 
 // --- Get Member Data ---------------------------------- // -------------------------------------------------------------------------
 
-export async function getUserData(token) {
+export async function getUser(token) {
     let res = await request('users/getUser', {
         token: token,
     });
