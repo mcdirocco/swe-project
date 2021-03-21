@@ -1,26 +1,41 @@
+import React, {useState} from "react";
 import { Container, Row, Col, Breadcrumb, Form, Button } from "react-bootstrap";
 import "./Login.css"
+import {loginUser} from "../API";
+
+// async function submission(username, password) {
+//     console.log("kms");
+//
+// }
 
 const Login = () => {
+    let [username, setUsername] = useState("");
+    let [password, setPassword] = useState("");
+    const submission = async (e) => {
+        e.preventDefault();
+        let TOKEN = await loginUser(username, password);
+        // TOKEN = await TOKEN.json();
+        console.log(TOKEN);
+    };
     return (
       <div className="LoginClassName">
           <Container>
               <Row className="TopLoginRow" xs={4}>
                   <Col className="LeftLoginCol" md={{span: 3, offset: 2}}>
-                      <p style={{color: "white"}}>Login Component</p>
-                      <Form>
+                      <p style={{color: "white"}}>Login Component</p>  {/*help*/}
+                      <Form className="FormGroupLeft" onSubmit={submission} >
                           <Form.Group>
-                              <Form.Label>Username/Email</Form.Label>
-                              <Form.Control type="email" placeholder="Username or Email" />
+                              <Form.Label>Username</Form.Label>
+                              <Form.Control type="formBasicText" placeholder="Username" onChange={e => {setUsername(e.target.value); console.log(username)}} />
                               <Form.Text className="text-muted" >
                                   Space out the form.control units.
                               </Form.Text>
                               <Form.Label>Password</Form.Label>
-                              <Form.Control type="password" placeholder="Password" />
+                              <Form.Control type="password" placeholder="Password" onChange={e => {setPassword(e.target.value)}}/>
                               <Form.Text>
                                   Put a border in the middle!
                               </Form.Text>
-                              <Button variant="primary" className="btn btn-block">Login</Button>
+                              <Button variant="primary" className="btn btn-block" type="submit">Login</Button>
                               <p className="forgot-password text-right">Forgot <a href="#">Password?</a></p>
                           </Form.Group>
                       </Form>
