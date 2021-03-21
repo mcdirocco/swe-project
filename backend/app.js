@@ -1,10 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import 'dotenv/config.js';
 import userRoutes from './routes/users.js';
 import eventRoutes from './routes/events.js';
 
 const app = express();
+app.use(cors());
 
 // --- Middlewares ---
 
@@ -17,7 +19,7 @@ app.use('/events', eventRoutes);
 // --- Routes ---
 
 app.get('/', (req, res) => {
-    res.send('API Home');
+    res.json({message: 'API Home'});
 });
 
 // --- Connect to MongoDB ---

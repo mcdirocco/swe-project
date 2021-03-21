@@ -18,9 +18,14 @@ event.get('/', async (req, res) => {
 // --- Create New event ---
 
 event.post('/create', async (req, res) => {
+    console.log(req.body);
     const event = new Event({
-        name: req.body.name,
-        startDate: Date.now(),
+        title: req.body.title,
+        description: req.body.description,
+        date: req.body.date,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        password: req.body.password
     });
     try {
         const saveEvent = await event.save();
