@@ -1,6 +1,9 @@
 import express from "express";
 import User from '../models/users.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config.js';
+import verifyToken from "./auth.js";
 
 const user = express.Router();
 
@@ -20,9 +23,16 @@ user.get('/', async (req, res) => {
 
 user.post('/create', async (req, res) => {
     const existingUser = await User.findOne({username: req.body.username});
+    const existingEmail = await User.findOne({email: req.body.email});
     if(existingUser !== null)
     {
         res.json({ message: "Username already exists."});
+        return;
+    }
+
+    if(existingEmail !== null)
+    {
+        res.json({ message: "Email address already exists."});
         return;
     }
 
@@ -99,10 +109,16 @@ user.post('/login', async (req, res) => {
     try {
         const loginUser = await User.findOne({username: req.body.username});
         if(loginUser !== null) {
-            const passvalid = await bcrypt.compare(req.body.password, loginUser.password);
-            res.json(passvalid);
+            const passValid = await bcrypt.compare(req.body.password, loginUser.password);
+            if(!passValid) {
+                res.json({message: 'Invalid username or password!'});
+                return;
+            }
+            const token = jwt.sign({_id: loginUser._id}, process.env.NOT_A_SECRET);
+            res.json({token: token});
+            return;
         }
-        res.json({ message: "No user found" });
+        res.json({message: 'Invalid username or password!'});
     }
     catch (err) {
         res.json({ message: err });

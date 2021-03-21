@@ -1,5 +1,7 @@
 import express from "express";
 import Event from '../models/events.js';
+import User from '../models/users.js';
+import verifyToken from "./auth.js";
 
 const event = express.Router();
 
@@ -52,6 +54,55 @@ event.delete('/:eventId', async (req, res) => {
 
 event.patch('/:eventId', async (req, res) => {
 
+});
+
+// --- Attend event ---
+
+event.post('/attend', async (req, res) => {
+    let userId = verifyToken(req.body.token);
+    if(!userId) {
+        res.json({message: 'Invalid user'});
+        return;
+    }
+    let event;
+    try {
+        event = await Event.findById(req.body.eventID);
+    }
+    catch (err) {
+        res.json({message: 'Invalid eventID'});
+    }
+    let user;
+    try {
+        user = await User.findById(userId._id);
+    }
+    catch(err) {
+        res.json({message: 'Something is clearly broken, and Max, lemme tell ya, you\'re a retard'});
+    }
+
+    if(req.body.password !== event.password)
+    {
+        res.json({message: 'Incorrect password!'});
+        return;
+    }
+
+    event.attendees.push(user._id);
+    user.attendedEvents.push(event._id);
+    console.log(event.attendees);
+
+    const eventAttendee = await Event.updateOne({_id: event._id}, {
+        $set: {
+            attendees: event.attendees,
+        }
+    });
+
+    const updateUser = await User.updateOne({_id: user._id}, {
+        $set: {
+            attendedEvents: user.attendedEvents,
+            points: user.points + 1,
+        }
+    });
+
+    res.json(updateUser);
 });
 
 export default event;
