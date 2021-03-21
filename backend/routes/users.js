@@ -26,8 +26,17 @@ user.post('/create', async (req, res) => {
         return;
     }
 
-    const salt = await bcrypt.genSalt(12);
-    const hash = await bcrypt.hash(req.body.password, salt);
+    let salt;
+    let hash;
+
+    try {
+        salt = await bcrypt.genSalt(12);
+        hash = await bcrypt.hash(req.body.password, salt);
+    }
+    catch (err) {
+        res.json({message: 'Password hashing failed.'});
+        return;
+    }
 
     const user = new User({
         firstname: req.body.firstname,
@@ -35,6 +44,8 @@ user.post('/create', async (req, res) => {
         username: req.body.username,
         email: req.body.email,
         password: hash,
+        year: req.body.year,
+        major: req.body.major,
     });
     try {
         const saveUser = await user.save();

@@ -24,7 +24,8 @@ event.post('/create', async (req, res) => {
         description: req.body.description,
         date: req.body.date,
         startTime: req.body.startTime,
-        endTime: req.body.endTime
+        endTime: req.body.endTime,
+        password: req.body.password
     });
     try {
         const saveEvent = await event.save();

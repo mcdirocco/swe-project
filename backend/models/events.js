@@ -21,6 +21,14 @@ const EventSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    password: {
+        type: String,
+        required: true,
+    },
+    attendees: {
+        type: Array,
+        default: [],
+    },
 });
 
 export default mongoose.model('Events', EventSchema);

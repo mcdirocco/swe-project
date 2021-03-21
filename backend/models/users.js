@@ -26,7 +26,7 @@ const UserSchema = mongoose.Schema({
         required: true,
     },
     year: {
-        type: Number,
+        type: String,
         required: true,
     },
     admin: {
@@ -34,8 +34,12 @@ const UserSchema = mongoose.Schema({
         default: false,
     },
     points: {
-      type: Number,
-      default: 0,
+        type: Number,
+        default: 0,
+    },
+    attendedEvents: {
+        type: Array,
+        default: [],
     },
 });
 
