@@ -6,7 +6,7 @@ let USER_TOKEN = undefined;
 
 // Master request, don't touch this one
 async function request(url, body) {
-    let res = await fetch('http://localhost:3001/' + url,
+    let res = await fetch('http://www.maxdirocco.com/' + url,
         {
             credentials: 'omit',
             headers: {
@@ -46,7 +46,7 @@ export async function loginUser(username, password) {
         password: password
     });
     USER_TOKEN = res.token;
-    return res;
+    return USER_TOKEN;
 }
 
 // --- Event Creation --------------------- // -------------------------------------------------------------------------

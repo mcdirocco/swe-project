@@ -10,10 +10,10 @@ const MemData = () => {
           <Container>
               <Row className="RowButtons">
                   <Col>
-                      <Button variant="primary" className="btn btn-block">Members</Button>
+                      <Button variant="primary" className="btn btn-sm">Members</Button>
                   </Col>
                   <Col>
-                      <Button variant="primary" className="btn btn-block">Events</Button>
+                      <Button variant="primary" className="btn btn-sm" aria-pressed="true">Events</Button>
                   </Col>
               </Row>
               <Row className="RowSplitPage">
@@ -21,16 +21,18 @@ const MemData = () => {
                     <Form>
                         This side is for the search bar, Scroll wheel, and Member mini-preview/title tags
                     </Form>
-                    <Form.Control type="formBasicText" placeholder="This is where we put the search bar. (Replace this)" />
+                      <Form className="form-inline my-2 my-lg-0">
+                          <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                              <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                      </Form>
                       <div className="form-group">
                           <label htmlFor="exampleFormControlSelect2">Example multiple select</label>
                           <select multiple className="form-control" id="exampleFormControlSelect2">
                               <option>1</option>
-                              <option>2</option>
+                              <option>Need a way to add in a member automatically once they make an account</option>
                               <option>3</option>
                               <option>Will we sort this alphabetically or by membership, points, attendance, or have ways to sort it?</option>
                               <option>4</option>
-                              <option>Need a way to add in a member automatically once they make an account</option>
                           </select>
                       </div>
                   </Col>
@@ -45,9 +47,9 @@ const MemData = () => {
                           <div className="card-body">
                               <h5 className="card-title" align="left">Username: <br /> Points: <br /> Tier Level: <br /> Attendance Level: </h5>
                               <p className="card-text">Show personal biography here? Large area for information.</p>
-                              <a href="#" className="btn btn-primary">Go somewhere</a>
                           </div>
                       </div>
+                      <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Export to CSV</button>
                   </Col>
               </Row>
           </Container>
