@@ -15,10 +15,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 const localizer = momentLocalizer(moment);
 let code;
-
+let eventVar;
 function submitFunc(code){
  //place the PUT request here
  console.log(code)
+ console.log(eventVar)
+ //append array
+ //then push it to server
 }
 
 function Event({ event }) {
@@ -47,6 +50,7 @@ function Event({ event }) {
   );
 
   console.log(event);
+  eventVar = event;
   return (
     <div>
       <div>
@@ -108,6 +112,7 @@ class Landing extends Component {
 
   
   async componentDidMount(){
+    localStorage.setItem("name", "Emily")
     const response = await fetch('http://www.maxdirocco.com/events');
     const data = await response.json();
     console.log(data)
@@ -121,7 +126,8 @@ class Landing extends Component {
       this.state.events[i].id = data._id;
       this.state.events[i].start = new Date(year, month, day);
       this.state.events[i].end = new Date(year, month, day);
-      this.state.events[i].title = data[i].title
+      this.state.events[i].title = data[i].title;
+      this.state.events[i].attendees = data[i].attendees;
       console.log(this.state.events)
     }
 }
