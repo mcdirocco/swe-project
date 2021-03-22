@@ -4,8 +4,8 @@ import Navbar from "./components/Navbar/Navbar";
 import 'bootstrap/dist/css/bootstrap.min.css';      //Bootstrap link suggested to do this
 
 import {
-  BrowserRouter as Router,
-  Route,
+    BrowserRouter as Router, Redirect,
+    Route,
 } from "react-router-dom";
 
 import AdminPortal from "./components/AdminPortal"; /* is this taking the .js files or ALL files with its same name, regardless of ending (.js, .css, .html)*/
@@ -21,14 +21,16 @@ const App = () => {
     <section className="App">
       <Navbar />
       <Router>
-        <Route path="/AdminPortal" component={AdminPortal} />
-        <Route path="/MemberData" component={MemberData} />
-        <Route path="/Login" component={Login} />
-        <Route path="/AccountDetails" component={AccountDetails} />
-        <Route path="/SignUp" component={Login} />
-        <Route path="/Landing" component={Landing} />
-        <Route path="/CreateEvent" component={CreateEvent} />
-
+        <Route exact path="/">
+            <Redirect to="/landing" />
+        </Route>
+        <Route path="/adminPortal" component={AdminPortal} />
+        <Route path="/memberData" component={MemberData} />
+        <Route path="/login" component={Login} />
+        <Route path="/accountDetails" component={AccountDetails} />
+        <Route path="/signUp" component={Login} />
+        <Route path="/landing" component={Landing} />
+        <Route path="/createEvent" component={CreateEvent} />
       </Router>
     </section>
 

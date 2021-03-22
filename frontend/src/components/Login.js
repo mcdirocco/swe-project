@@ -92,7 +92,7 @@ const Login = () => {
                           </div>
                       </div>
                       <Form onSubmit={submissionSI}>
-                        <Button variant="primary" className="btn btn-block btn-dope">Sign Up</Button>
+                        <Button type="submit" variant="primary" className="btn btn-block btn-dope">Sign Up</Button>
                       </Form>
                       </Col>
 

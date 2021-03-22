@@ -2,8 +2,6 @@
 
 // GLOBAL VARIABLES
 
-let USER_TOKEN = undefined;
-
 // Master request, don't touch this one
 async function request(url, body) {
     let res = await fetch('http://www.maxdirocco.com/' + url,
@@ -45,8 +43,15 @@ export async function loginUser(username, password) {
         username: username,
         password: password
     });
-    USER_TOKEN = res.token;
-    return USER_TOKEN;
+    if(res.token === undefined) {
+        return false;
+    }
+    let user = await getUser(res.token);
+    localStorage.setItem(
+        "name",
+        user.user.firstname
+    );
+    return res.token;
 }
 
 // --- Get Member Data ---------------------------------- // -------------------------------------------------------------------------
