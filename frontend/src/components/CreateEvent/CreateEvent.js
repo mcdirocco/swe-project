@@ -13,7 +13,7 @@ class Popup extends React.Component {
     end: undefined,
     startTime: undefined,
     endTime: undefined,
-    attendees:[]
+    password: "1234"
   };
 //GENERATE RANDOM CODE TO BE DISPLAYED
 onSubmit = async (e) => {

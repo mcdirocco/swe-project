@@ -13,14 +13,19 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form' 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
+import { attendEvent } from '../API';
 const localizer = momentLocalizer(moment);
 let code;
-let eventVar;
-function submitFunc(code){
+let eventVar={
+  id: ""
+};
+
+function submitFunc(code, eventVar){
  //place the PUT request here
- console.log(code)
- console.log(eventVar)
- //append array
+ //console.log(code)
+ //console.log(eventVar.id)
+ attendEvent(eventVar.id, code)
+ //do the attend event functions
  //then push it to server
 }
 
@@ -33,7 +38,7 @@ function Event({ event }) {
         </Modal.Header>
 
         <Modal.Body>
-            <Form onSubmit = {submitFunc(code)}>
+            <Form onSubmit = {submitFunc(code, eventVar)}>
               <Form.Group controlId="formBasicDescription">
                 <Form.Label>Enter Event Code Here!</Form.Label>
                   <Form.Control type="String" onChange={e => code = e.target.value}></Form.Control>
@@ -65,47 +70,19 @@ function Event({ event }) {
 
 
 class Landing extends Component {
-  onSignIn = async (e) => {
-    e.preventDefault();
-    console.log(e)
-    //this.setState({start: dateIn})
-    let res = await fetch(
-      'http://www.maxdirocco.com/events/create',
-      {
-        credentials: 'omit',
-        headers: {
-          accept: 'application/json, text/javascript, */*; q=0.01',
-          'accept-language': 'en-US,en;q=0.9',
-          'content-type': 'application/json;charset=UTF-8',
-          'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'cross-site',
-        },
-        referrerPolicy: 'no-referrer-when-downgrade',
-        body: JSON.stringify(this.state),
-        method: 'POST', //change to post and add body to add an event
-        mode: 'cors',
-      },
-    );
-    res = await res.json();  
-    console.log(res);
-  }
-
+  
 
   //add the events from DB in here
   state = {
     seen: false,
     events: [
       {
-          id: undefined,
+          id: String,
           title: String,
           start: Date,
           end: Date,
       },
-      {
-          title: "Yay",
-          start: new Date(2021, 2, 8),
-          end: new Date(2021, 2, 9)
-      }
+      
       
     ]
   };
@@ -115,7 +92,7 @@ class Landing extends Component {
     localStorage.setItem("name", "Emily")
     const response = await fetch('http://www.maxdirocco.com/events');
     const data = await response.json();
-    console.log(data)
+    //console.log(data)
     for(var i=0; i < data.length; i++){
       this.state.events[i] = new Object();
       var dateObj = new Date(data[i].date);
@@ -123,12 +100,12 @@ class Landing extends Component {
       var year = dateObj.getFullYear();
       var month = dateObj.getMonth();
       var day = dateObj.getDate() + 1;
-      this.state.events[i].id = data._id;
       this.state.events[i].start = new Date(year, month, day);
       this.state.events[i].end = new Date(year, month, day);
       this.state.events[i].title = data[i].title;
       this.state.events[i].attendees = data[i].attendees;
-      console.log(this.state.events)
+      this.state.events[i].id = data[i]._id;
+      console.log(this.state.events[i].id)
     }
 }
 
@@ -138,7 +115,7 @@ class Landing extends Component {
       <div className="App">
         <Container fluid>
           <Row>
-            <Col md={10}>
+            <Col md={false ? 10 : 12}>
         <div>
         <Calendar
           localizer={localizer}
@@ -154,11 +131,11 @@ class Landing extends Component {
 
         </div>
         </Col>
-        <Col md={2} >
+        {true && <Col md={2} >
           <div className="buttonCol">
-          <Button className='CreateEventButton' href='/CreateEvent' color="primary">Create an Event</Button>
+            <Button className='CreateEventButton' href='/CreateEvent' color="primary">Create an Event</Button> 
           </div>
-        </Col>
+        </Col>}
         </Row>
        </Container>
          
