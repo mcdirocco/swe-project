@@ -16,6 +16,7 @@ const Login = () => {
         e.preventDefault();
         let TOKEN = await loginUser(username, password);
         console.log(TOKEN);
+        localStorage.setItem("Token", TOKEN);
     }
 
     let [firstNameSI, setFirstNameSI] = useState("");
