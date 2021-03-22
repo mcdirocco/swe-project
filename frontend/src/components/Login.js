@@ -16,6 +16,7 @@ const Login = () => {
         let TOKEN = await loginUser(username, password);
         // TOKEN = await TOKEN.json();
         console.log(TOKEN);
+        localStorage.setItem("Token", TOKEN);
     };
     return (
       <div className="LoginClassName">

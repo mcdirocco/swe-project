@@ -17,7 +17,6 @@ class Popup extends React.Component {
   };
 //GENERATE RANDOM CODE TO BE DISPLAYED
 onSubmit = async (e) => {
-  e.preventDefault();
   console.log("feet")
   console.log(this.state.start)
   var dateIn = moment(this.state.start);
@@ -72,6 +71,11 @@ onSubmit = async (e) => {
       <Form.Group controlId="formBasicDescription">
         <Form.Label>End Time</Form.Label>
         <Form.Control type="time" value={this.state.endTime} onChange={e => this.setState({endTime: e.target.value})}/>
+      </Form.Group>
+
+      <Form.Group controlId="formBasicDescription">
+        <Form.Label>password</Form.Label>
+        <Form.Control type="string" value={this.state.password} onChange={e => this.setState({password: e.target.value})}/>
       </Form.Group>
       
       <Button variant="primary" type="submit">

@@ -13,18 +13,21 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form' 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
-import { attendEvent } from '../API';
+import { attendEvent, getUser } from '../API';
+import { Redirect } from 'react-router-dom';
 const localizer = momentLocalizer(moment);
 let code;
 let eventVar={
   id: ""
 };
 
-function submitFunc(code, eventVar){
+async function submitFunc(code, eventVar){
  //place the PUT request here
- //console.log(code)
- //console.log(eventVar.id)
- attendEvent(eventVar.id, code)
+ let token = localStorage.getItem("Token");
+ let user = await getUser(token);
+ console.log(user)
+ await attendEvent(token, user._id, code)
+ 
  //do the attend event functions
  //then push it to server
 }
@@ -92,7 +95,7 @@ class Landing extends Component {
     localStorage.setItem("name", "Emily")
     const response = await fetch('http://www.maxdirocco.com/events');
     const data = await response.json();
-    //console.log(data)
+    console.log(data)
     for(var i=0; i < data.length; i++){
       this.state.events[i] = new Object();
       var dateObj = new Date(data[i].date);
