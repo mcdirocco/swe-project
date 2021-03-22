@@ -40,6 +40,8 @@ onSubmit = async (e) => {
   );
   res = await res.json();  
   console.log(res);
+  //window.location.replace("Landing") trying to get the function to reroute
+
 }
 
   render() {  

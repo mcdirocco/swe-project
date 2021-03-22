@@ -99,8 +99,9 @@ class Landing extends Component {
     console.log(data)
     let token = localStorage.getItem("Token");
     let user = await getUser(token);
-    console.log(user)
-    localStorage.setItem("name", (user.firstname + " " + user.lastname))
+    console.log(user.user.firstname)
+    localStorage.setItem("name", (user.user.firstname + " " + user.user.lastname))
+    let name = (user.user.firstname + " " + user.user.lastname);
     console.log(localStorage.getItem("name"))
     for(var i=0; i < data.length; i++){
       this.state.events[i] = new Object();

@@ -4,7 +4,9 @@ import {Navbar, Nav, } from "react-bootstrap"
 import './Navbar.css'
 
 class NavbarClass extends React.Component {
+    
     render() {
+        let name = localStorage.getItem("name");
         return (
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
@@ -17,7 +19,7 @@ class NavbarClass extends React.Component {
                     <Nav.Link href="AccountDetails">Account Details</Nav.Link>
                     </Nav>
                     <Nav inline>
-                        <p>Welcome</p>
+                        <p>Welcome {name}</p>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
