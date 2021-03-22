@@ -31,6 +31,7 @@ const Login = () => {
         e.preventDefault();
         let TOKEN = await createUser(firstNameSI, lastNameSI, usernameSI, passwordSI, emailSI, majorSI, yearSI);
         console.log(TOKEN);
+        localStorage.setItem("Token", TOKEN);
     };
 
     return (

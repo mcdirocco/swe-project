@@ -49,7 +49,16 @@ export async function loginUser(username, password) {
     return USER_TOKEN;
 }
 
-// --- Event Creation --------------------- // -------------------------------------------------------------------------
+// --- Get Member Data ---------------------------------- // -------------------------------------------------------------------------
+
+export async function getUser(token) {
+    let res = await request('users/getUser', {
+        token: token,
+    });
+    return res;
+}
+
+// --- Event Creation and Attendance--------------------- // -------------------------------------------------------------------------
 
 export async function createEvent(title, description, date, startTime, endTime, password) {
     return await request('events/create',{
@@ -62,9 +71,9 @@ export async function createEvent(title, description, date, startTime, endTime, 
     });
 }
 
-export async function attendEvent(eventID, password) {
+export async function attendEvent(token, eventID, password) {
     return await request('events/attend', {
-        token: USER_TOKEN,          // DEPENDS ON userLogin() BEING CALLED FIRST
+        token: token,               // type: String
         eventID: eventID,           // type: String
         password: password          // type: String
     });

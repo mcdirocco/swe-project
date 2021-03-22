@@ -125,4 +125,23 @@ user.post('/login', async (req, res) => {
     }
 });
 
+// --- Get Existing User Data ---
+
+user.post('/getUser', async (req, res) => {
+    try{
+        let token = verifyToken(req.body.token);
+        if(token === false)
+        {
+            res.json({message: 'Invalid token recieved!'});
+            return;
+        }
+        const user = await User.findById(token._id);
+        res.json({user});
+        return;
+    }
+    catch (err){
+        res.json({message: 'Error: Something is incorrecto!' })
+    }
+});
+
 export default user;
