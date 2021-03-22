@@ -70,13 +70,15 @@ event.post('/attend', async (req, res) => {
     }
     catch (err) {
         res.json({message: 'Invalid eventID'});
+        return;
     }
     let user;
     try {
         user = await User.findById(userId._id);
     }
     catch(err) {
-        res.json({message: 'Something is clearly broken, and Max, lemme tell ya, you\'re a retard'});
+        res.json({message: 'Something is clearly broken'});
+        return;
     }
 
     if(req.body.password !== event.password)
