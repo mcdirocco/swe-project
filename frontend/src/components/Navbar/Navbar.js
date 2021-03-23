@@ -1,49 +1,77 @@
-import React, { Component } from 'react';
-import { NavMenuItems } from "./NavMenuItems";
-import {Navbar, Nav, } from "react-bootstrap"
-import './Navbar.css'
+import React, {Component, useEffect, useState} from "react";
+import {Navbar, Nav, Button, FormControl} from "react-bootstrap";
+import "./Navbar.css";
+import Form from "react-bootstrap/Form";
 
-class NavbarClass extends React.Component {
-
-    render() {
+const NavbarClass = () => {
+    let [loginVisible, setLoginVisible] = useState(true);
+    let [userName, setUserName] = useState("Guest");
+    useEffect(() => {
         let name = localStorage.getItem("name");
-        return (
-            <Navbar bg="light" expand="lg">
-                <Navbar.Brand href="landing">SWE - University of Florida</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
-                    <Nav.Link href="landing">Home</Nav.Link>
-                    <Nav.Link href="memberData">MemberData</Nav.Link>
+        if(name !== null) {
+            setUserName(name);
+            setLoginVisible(false);
+        }
+        else
+        {
+            setUserName("Guest");
+            setLoginVisible(true);
+        }
+    });
+    let name = localStorage.getItem("name");
+    return (
+        <Navbar bg="light" expand="lg">
+            <Navbar.Brand href="landing">SWE - University of Florida</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                    <Nav.Link href="landing">Calendar</Nav.Link>
+                    <Nav.Link href="memberData">Members</Nav.Link>
                     <Nav.Link href="login">Login</Nav.Link>
-                    <Nav.Link href="accountDetails">Account Details</Nav.Link>
-                    </Nav>
-                    <Nav inline>
-                        <Nav.Link disabled={false}>Welcome, {name === null ? 'Guest' : name}!</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-        );
-    }
-}
+                </Nav>
+                <Form inline>
+                    <Nav.Link className={"NavbarWelcome"}>Welcome, {userName}!</Nav.Link>
+                    {!loginVisible && <Nav.Link href="accountDetails">My Account</Nav.Link>}
+                    {loginVisible && <Button href={'/login'} variant="primary">Login</Button>}
+                </Form>
+                {/*<Nav inline>*/}
+                {/*    <Nav.Link disabled={false}>*/}
+                {/*        Welcome, {name === null ? "Guest" : name}!*/}
+                {/*    </Nav.Link>*/}
+                {/*    <Button href={"/login"}>Login</Button>*/}
+                {/*</Nav>*/}
+            </Navbar.Collapse>
+        </Navbar>
+    );
+};
 
-export default NavbarClass
+export default NavbarClass;
 
 //<div style={{display: "flex", flex: 1, backgroundColor: '#5a5377'}}>
-{/* <nav className="NavbarContainer">
-{/*<h1 className="navbar-logo"/>*/}
-{/*<div className="menu-icon">*/}
-{/*</div>*/}
-{/* <ul className='NavbarMenuItems'>
-    {NavMenuItems.map((item, index) => {
-        return (
-            <li className='InnerMapList' key={index}>
-                <a className={item.cName} href={item.url}>
-                    {item.title}
-                </a>
-            </li>
-        );
-    })}
-</ul>
-</nav> */}
-{/*</div> */}
+{
+    /* <nav className="NavbarContainer">
+  {/*<h1 className="navbar-logo"/>*/
+}
+{
+    /*<div className="menu-icon">*/
+}
+{
+    /*</div>*/
+}
+{
+    /* <ul className='NavbarMenuItems'>
+      {NavMenuItems.map((item, index) => {
+          return (
+              <li className='InnerMapList' key={index}>
+                  <a className={item.cName} href={item.url}>
+                      {item.title}
+                  </a>
+              </li>
+          );
+      })}
+  </ul>
+  </nav> */
+}
+{
+    /*</div> */
+}

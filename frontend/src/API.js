@@ -46,6 +46,7 @@ export async function loginUser(username, password) {
     if(res.token === undefined) {
         return false;
     }
+    localStorage.setItem("token", res.token);
     let user = await getUser(res.token);
     localStorage.setItem(
         "name",
@@ -77,6 +78,7 @@ export async function createEvent(title, description, date, startTime, endTime, 
 }
 
 export async function attendEvent(token, eventID, password) {
+    console.log(token, eventID, password);
     return await request('events/attend', {
         token: token,               // type: String
         eventID: eventID,           // type: String

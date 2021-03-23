@@ -29,6 +29,7 @@ const MemData = () => {
                           <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
                               <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                       </Form>
+                      <br />
                       <div className="form-group">
                           <label htmlFor="exampleFormControlSelect2" style={{color: "white"}}>Example multiple select</label>
                           <select multiple className="form-control" id="exampleFormControlSelect2">
@@ -54,6 +55,7 @@ const MemData = () => {
                               <p className="card-text">Show personal biography here? Large area for information.</p>
                           </div>
                       </div>
+                      <br />
                       <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Export to CSV</button>
                   </Col>
               </Row>

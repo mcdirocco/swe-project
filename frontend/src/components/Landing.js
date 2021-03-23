@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import Popup from "reactjs-popup";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import CreateEvent from "./CreateEvent/CreateEvent";
 import "./Landing.css";
-import { Overlay } from "react-bootstrap";
 import { OverlayTrigger } from "react-bootstrap";
 import { Popover } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
@@ -14,20 +11,24 @@ import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { attendEvent, getUser } from "../API";
-import { Redirect } from "react-router-dom";
+
 const localizer = momentLocalizer(moment);
 let code;
 let eventVar = {
     id: "",
 };
 
-async function submitFunc(code, eventVar) {
+async function submitFunc(e) {
+    e.preventDefault();
     //place the PUT request here
-    let token = localStorage.getItem("Token");
+    if(code === undefined) {
+        return;
+    }
+    let token = await localStorage.getItem("token");
     let user = await getUser(token);
-    console.log(user);
+    console.log(token, eventVar.id, code);
 
-    await attendEvent(token, user._id, code);
+    await attendEvent(token, eventVar.id, code);
 
     //do the attend event functions
     //then push it to server
@@ -42,26 +43,28 @@ function Event({ event }) {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <Form onSubmit={submitFunc(code, eventVar)}>
+                    <Form onSubmit={submitFunc}>
                         <Form.Group controlId="formBasicDescription">
                             <Form.Label>Enter Event Code Here!</Form.Label>
                             <Form.Control
                                 type="String"
-                                onChange={(e) => (code = e.target.value)}
-                            ></Form.Control>
+                                onChange={(e) => {code = e.target.value}}
+                            />
                         </Form.Group>
+                        <Button variant="secondary">Close</Button>
+                        <Button type="submit" variant="primary">
+                            Submit
+                        </Button>
                     </Form>
                 </Modal.Body>
 
-                <Modal.Footer>
-                    <Button variant="secondary">Close</Button>
-                    <Button variant="primary">Submit</Button>
-                </Modal.Footer>
+                {/*<Modal.Footer>*/}
+                {/*    */}
+                {/*</Modal.Footer>*/}
             </Modal.Dialog>
         </Popover>
     );
 
-    console.log(event);
     eventVar = event;
     return (
         <div>
@@ -100,11 +103,10 @@ class Landing extends Component {
         const response = await fetch("http://www.maxdirocco.com/events");
         const data = await response.json();
         console.log(data);
-        let token = localStorage.getItem("Token");
-        if (token === null) {
-            localStorage.setItem("name", "Guest");
-        }
-        console.log(localStorage.getItem("name"));
+        // let token = localStorage.getItem("Token");
+        // if (token === null) {
+        //     localStorage.setItem("name", "Guest");
+        // }
         for (let i = 0; i < data.length; i++) {
             this.state.events[i] = {};
             let dateObj = new Date(data[i].date);
@@ -119,15 +121,15 @@ class Landing extends Component {
             this.state.events[i].id = data[i]._id;
             console.log(this.state.events[i].id);
         }
-        await this.setState({loaded: true});
+        await this.setState({ loaded: true });
     }
 
     render() {
-        if(!this.state.loaded) {
+        if (!this.state.loaded) {
             return (
                 <div className="App">
                     <Container fluid>
-                        <h1 style={{height: "100vh", color: 'white'}}>Loading...</h1>
+                        <h1 style={{ height: "100vh", color: "white" }}>Loading...</h1>
                     </Container>
                 </div>
             );
@@ -136,7 +138,7 @@ class Landing extends Component {
             <div className="App">
                 <Container fluid>
                     <Row>
-                        <Col md={false ? 10 : 12}>
+                        <Col md={12}>
                             <div>
                                 <Calendar
                                     localizer={localizer}
@@ -157,19 +159,17 @@ class Landing extends Component {
                                 />
                             </div>
                         </Col>
-                        {true && (
-                            <Col md={2}>
-                                <div className="buttonCol">
-                                    <Button
-                                        className="CreateEventButton"
-                                        href="/CreateEvent"
-                                        color="primary"
-                                    >
-                                        Create an Event
-                                    </Button>
-                                </div>
-                            </Col>
-                        )}
+                        <Col md={2}>
+                            <div className="buttonCol">
+                                <Button
+                                    className="CreateEventButton"
+                                    href="/CreateEvent"
+                                    color="primary"
+                                >
+                                    Create an Event
+                                </Button>
+                            </div>
+                        </Col>
                     </Row>
                 </Container>
             </div>
