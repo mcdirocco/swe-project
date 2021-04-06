@@ -15,13 +15,7 @@ const Login = () => {
     let [username, setUsername] = useState("");
     let [password, setPassword] = useState("");
 
-    const submission = async (e) => {
-        e.preventDefault();
-        let TOKEN = await loginUser(username, password);
-        console.log(TOKEN);
-        localStorage.setItem("token", TOKEN);
-        setRedirect(true);
-    }
+    // --- Sign Up Field States --- //
 
     let [firstNameSI, setFirstNameSI] = useState("");
     let [lastNameSI, setLastNameSI] = useState("");
@@ -32,32 +26,55 @@ const Login = () => {
     let [majorSI, setMajorSI] = useState("");
     let [yearSI, setYearSI] = useState("");
 
+    // ---------------------------- //
+
     useEffect(() => {
-        let value = Math.round((Math.random() * 1000)).toString()
-        setFirstNameSI("Jane");
-        setLastNameSI("Smith");
-        setUsernameSI("jsmith" + value.toString());
-        setEmailSI("jsmith" + value.toString() + "@gmail.com");
-        setPasswordSI("password");
-        setConfirmPassSI("password");
-        setMajorSI("Engineering");
-        setYearSI((Math.round(Math.random() * 5).toString()));
+        // let value = Math.round((Math.random() * 1000)).toString()
+        // setFirstNameSI("Jane");
+        // setLastNameSI("Smith");
+        // setUsernameSI("jsmith" + value.toString());
+        // setEmailSI("jsmith" + value.toString() + "@gmail.com");
+        // setPasswordSI("password");
+        // setConfirmPassSI("password");
+        // setMajorSI("Engineering");
+        // setYearSI((Math.round(Math.random() * 5).toString()));
     }, []);
+
+    const submission = async (e) => {
+        e.preventDefault();
+        let TOKEN = await loginUser(username, password);
+        if (TOKEN === false){
+            alert("Incorrect username or password!");
+            return;
+        }
+        localStorage.setItem("token", TOKEN);
+        setRedirect(true);
+    };
 
     const submissionSI = async (e) => {
         e.preventDefault();
-        let TOKEN = await createUser(firstNameSI, lastNameSI, usernameSI, passwordSI, emailSI, majorSI, yearSI);
-        alert(TOKEN.firstname !== undefined ? "New User Created!\nFirstName: " + TOKEN.firstname +
-            "\nLastName: " + TOKEN.lastname + "\nUsername: " +
-            TOKEN.username + "\nEmail: " + TOKEN.email : "User already exists!");
-        localStorage.setItem("Token", TOKEN);
+        if(passwordSI !== confirmPassSI) {
+            alert('Make sure your passwords match!');
+            return;
+        }
+        else {
+            let TOKEN = await createUser(firstNameSI, lastNameSI, usernameSI, passwordSI, emailSI, majorSI, yearSI);
+            console.log(TOKEN); // Check wtf this is
+            alert(TOKEN.firstname !== undefined ? "New User Created!\nFirstName: " +
+                TOKEN.firstname + "\nLastName: " + TOKEN.lastname + "\nUsername: " +
+                TOKEN.username + "\nEmail: " + TOKEN.email : "User already exists!");
+            if(TOKEN.firstname !== undefined) {
+                let TOKEN = await loginUser(usernameSI, passwordSI);
+                localStorage.setItem("token", TOKEN);
+                setRedirect(true);
+            }
+        }
     };
 
     return (
       <div className="LoginClassName">
           <Container>
               <Row className="TopLoginRow">
-
                   <Col className="LeftLoginCol" md={{span: 6}}>   {/*md={{span: 3, offset: 2}}*/}
                       <div className="card">
                           <h5 className="card-header">Log In</h5>
@@ -89,21 +106,21 @@ const Login = () => {
                                   <Form.Label>First Name</Form.Label>
                                   <Form.Control type="formBasicText" value={firstNameSI} placeholder="First Name" onChange={e => {setFirstNameSI(e.target.value)}}/>
                                   <Form.Label>Last Name</Form.Label>
-                                  <Form.Control type="formBasicText" value="Smith" placeholder="Last Name" onChange={e => {setLastNameSI(e.target.value)}}/>
+                                  <Form.Control type="formBasicText" value={lastNameSI} placeholder="Last Name" onChange={e => {setLastNameSI(e.target.value)}}/>
                                   <Form.Label>Username</Form.Label>
-                                  <Form.Control type="formBasicText" value={"jsmith" + Math.round((Math.random() * 1000)).toString()} placeholder="Username" onChange={e => {setUsernameSI(e.target.value)}}/>
+                                  <Form.Control type="formBasicText" value={usernameSI} placeholder="Username" onChange={e => {setUsernameSI(e.target.value)}}/>
                                   <Form.Label>Email</Form.Label>
-                                  <Form.Control type="email" value="jsmith99@gmail.com" placeholder="Email" onChange={e => {setEmailSI(e.target.value)}}/>
+                                  <Form.Control type="email" value={emailSI} placeholder="Email" onChange={e => {setEmailSI(e.target.value)}}/>
                               </Col>
                               <Col md={{span: 6}}>
                                   <Form.Label>Password</Form.Label>
-                                  <Form.Control type="password" value="password" placeholder="Password" onChange={e => {setPasswordSI(e.target.value)}}/>
+                                  <Form.Control type="password" value={passwordSI} placeholder="Password" onChange={e => {setPasswordSI(e.target.value)}}/>
                                   <Form.Label>Password Confirmation</Form.Label>
-                                  <Form.Control type="password" value="password" placeholder="Confirm Your Password" onChange={e => {setConfirmPassSI(e.target.value)}}/>
+                                  <Form.Control type="password" value={confirmPassSI} placeholder="Confirm Your Password" onChange={e => {setConfirmPassSI(e.target.value)}}/>
                                   <Form.Label>Degree Major</Form.Label>
-                                  <Form.Control type="formBasicText" value="Engineer" placeholder="Degree Major"onChange={e => {setMajorSI(e.target.value)}} />
+                                  <Form.Control type="formBasicText" value={majorSI} placeholder="Degree Major"onChange={e => {setMajorSI(e.target.value)}} />
                                   <Form.Label>Current Academic Year</Form.Label>
-                                  <Form.Control type="formBasicText" value={Math.round(Math.random() * 5).toString()} placeholder="Current Academic Year" onChange={e => {setYearSI(e.target.value)}}/>
+                                  <Form.Control type="formBasicText" value={yearSI} placeholder="Current Academic Year" onChange={e => {setYearSI(e.target.value)}}/>
                               </Col>
                               </Row>
                           </Form>
@@ -120,24 +137,4 @@ const Login = () => {
     );
   }
 
-  export default Login;
-{/**/}
-/*
-
-
-
-  <header className="App-header">
-      Login Comp | Signup Comp
-      <h2 >I now know why I am purple @App.css </h2>
-  </header>
-
-  <Breadcrumb className="justify-content-end">
-      <Breadcrumb.Item>Forgot Password?</Breadcrumb.Item>
-  </Breadcrumb>
-
-
-
-screen width is 12
-
-
-*/
+export default Login;
