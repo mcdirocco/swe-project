@@ -57,6 +57,11 @@ export async function loginUser(username, password) {
 
 // --- Get Member Data ---------------------------------- // -------------------------------------------------------------------------
 
+export async function getUsers() {
+    let res = await fetch('http://www.maxdirocco.com/users');
+    return await res.json();
+}
+
 export async function getUser(token) {
     let res = await request('users/getUser', {
         token: token,

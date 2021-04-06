@@ -29,6 +29,7 @@ async function submitFunc(e) {
     let user = await getUser(token);
     console.log(token, eventVar.id, code);
     await attendEvent(token, eventVar.id, code);
+    alert('Event attended!');
 
     //do the attend event functions
     //then push it to server

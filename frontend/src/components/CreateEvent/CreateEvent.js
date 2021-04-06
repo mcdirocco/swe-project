@@ -38,6 +38,7 @@ class Popup extends React.Component {
     res = await res.json();
     console.log(res);
     //window.location.replace("Landing") trying to get the function to reroute
+    alert('Event created!');
   };
 
   render() {

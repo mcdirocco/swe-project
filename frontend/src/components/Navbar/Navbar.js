@@ -26,7 +26,7 @@ const NavbarClass = () => {
     let name = localStorage.getItem("name");
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="landing">SWE - University of Florida</Navbar.Brand>
+            <Navbar.Brand href="landing">SWE - Attendance Tracker</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
            
