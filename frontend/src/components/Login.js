@@ -20,6 +20,7 @@ const Login = () => {
         let TOKEN = await loginUser(username, password);
         console.log(TOKEN);
         localStorage.setItem("token", TOKEN);
+        localStorage.setItem("refresh", "true");
         setRedirect(true);
     }
 

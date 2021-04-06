@@ -17,6 +17,7 @@ let code;
 let eventVar = {
     id: "",
 };
+let isAdmin = false;
 
 async function submitFunc(e) {
     e.preventDefault();
@@ -27,7 +28,6 @@ async function submitFunc(e) {
     let token = await localStorage.getItem("token");
     let user = await getUser(token);
     console.log(token, eventVar.id, code);
-
     await attendEvent(token, eventVar.id, code);
 
     //do the attend event functions
@@ -38,9 +38,7 @@ function Event({ event }) {
     let popoverClickRootClose = (
         <Popover id="popover-trigger-click-root-close" style={{ zIndex: 10000 }}>
             <Modal.Dialog>
-                <Modal.Header closeButton>
                     <Modal.Title>Sign In Here</Modal.Title>
-                </Modal.Header>
 
                 <Modal.Body>
                     <Form onSubmit={submitFunc}>
@@ -51,7 +49,6 @@ function Event({ event }) {
                                 onChange={(e) => {code = e.target.value}}
                             />
                         </Form.Group>
-                        <Button variant="secondary">Close</Button>
                         <Button type="submit" variant="primary">
                             Submit
                         </Button>
@@ -100,9 +97,21 @@ class Landing extends Component {
     };
 
     async componentDidMount() {
+        let isRefresh = localStorage.getItem("refresh")
+        if( isRefresh == "true"){
+            localStorage.setItem("refresh", "false");
+            window.location.reload(false);
+        }
         const response = await fetch("http://www.maxdirocco.com/events");
         const data = await response.json();
         console.log(data);
+        let token = await localStorage.getItem("token");
+        let user = await getUser(token);
+        console.log(user.message);
+        if(user.message != "Invalid token recieved!"){
+            localStorage.setItem("isAdmin", user.user.admin);
+            isAdmin = user.user.admin;
+        }
         // let token = localStorage.getItem("Token");
         // if (token === null) {
         //     localStorage.setItem("name", "Guest");
@@ -121,6 +130,8 @@ class Landing extends Component {
             this.state.events[i].id = data[i]._id;
             console.log(this.state.events[i].id);
         }
+
+
         await this.setState({ loaded: true });
     }
 
@@ -159,7 +170,7 @@ class Landing extends Component {
                                 />
                             </div>
                         </Col>
-                        <Col md={2}>
+                        {isAdmin == true && <Col md={2}>
                             <div className="buttonCol">
                                 <Button
                                     className="CreateEventButton"
@@ -169,7 +180,7 @@ class Landing extends Component {
                                     Create an Event
                                 </Button>
                             </div>
-                        </Col>
+                        </Col>}
                     </Row>
                 </Container>
             </div>

@@ -2,20 +2,25 @@ import React, {Component, useEffect, useState} from "react";
 import {Navbar, Nav, Button, FormControl} from "react-bootstrap";
 import "./Navbar.css";
 import Form from "react-bootstrap/Form";
+    
 
 const NavbarClass = () => {
     let [loginVisible, setLoginVisible] = useState(true);
     let [userName, setUserName] = useState("Guest");
+    let isAdmin = localStorage.getItem("isAdmin");
+    
     useEffect(() => {
         let name = localStorage.getItem("name");
         if(name !== null) {
             setUserName(name);
             setLoginVisible(false);
+            isAdmin = localStorage.getItem("isAdmin");
         }
         else
         {
             setUserName("Guest");
             setLoginVisible(true);
+            isAdmin = false;
         }
     });
     let name = localStorage.getItem("name");
@@ -24,11 +29,17 @@ const NavbarClass = () => {
             <Navbar.Brand href="landing">SWE - University of Florida</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
+           
                 <Nav className="mr-auto">
                     <Nav.Link href="landing">Calendar</Nav.Link>
-                    <Nav.Link href="memberData">Members</Nav.Link>
+                    {isAdmin === "true"
+                        ? <Nav.Link href="memberData">Members</Nav.Link>
+                        : ' '
+                    }
                     <Nav.Link href="login">Login</Nav.Link>
                 </Nav>
+            
+            
                 <Form inline>
                     <Nav.Link className={"NavbarWelcome"}>Welcome, {userName}!</Nav.Link>
                     {!loginVisible && <Nav.Link href="accountDetails">My Account</Nav.Link>}

@@ -39,7 +39,7 @@ const AccountDetails = () => {
                 <h2>Email Address: {user === undefined ? "None" : user.user.email}</h2>
                 <h2>Total Points: {points}</h2>
                 <br />
-                <Button href="/landing" onClick={() => {{localStorage.removeItem("name"); localStorage.removeItem("token");}}} variant={"danger"} className={""}>Logout</Button>
+                <Button href="/landing" onClick={() => {{localStorage.removeItem("name"); localStorage.removeItem("token"); localStorage.setItem("isAdmin", "false")}}} variant={"danger"} className={""}>Logout</Button>
             </header>
         </div>
     );
