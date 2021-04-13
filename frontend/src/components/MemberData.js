@@ -117,7 +117,7 @@ const MemData = () => {
                                 type="search"
                                 placeholder={membersOrEvents ? "Search for Members:" : "Search for Events:"}
                                 aria-label="Search"
-                                onChange={event => setSearchQuery(event.target.value)}
+                                onChange={event => setSearchQuery(event.target.value.toLowerCase())}
                             />
                             <button
                                 className="btn btn-outline-success my-2 my-sm-0"
