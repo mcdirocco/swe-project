@@ -9,7 +9,7 @@ const MemData = () => {
     let [user, setUser] = useState();
     let [events, setEvents] = useState();
     let [event, setEvent] = useState();
-    let [membersOrEvents, setMembersOrEvents] = useState(false);
+    let [membersOrEvents, setMembersOrEvents] = useState(true);
 
     useEffect(async () => {
         let users = await getUsers();
@@ -21,6 +21,8 @@ const MemData = () => {
         setIsLoading(false);
     }, []);
 
+
+
     if (isLoading) {
         return (
             <div className="App">
@@ -30,6 +32,29 @@ const MemData = () => {
             </div>
         );
     }
+
+    //-------------------Nick's Stuff
+
+    // const editSearchTerm = (e) => {
+    //     this.setState({searchTerm: e.target.value})
+    // }
+    //
+    // const dynamicSearch = () => {
+    //     return this.state.names.filter(name => name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+    // }
+    //
+    // const render = () => {
+    //     return (
+    //         <div style = {{textAlign: 'center', paddingTop: '30vh'}}>
+    //             <input type = 'text' value = {this.state.searchTerm} onChange = {this.editSearchTerm} placeholder = 'Search for a name'/>
+    //             <br></br>
+    //             <h3>These are names:</h3>
+    //             <events event = {this.dynamicSearch()}/>
+    //         </div>
+    //     );
+    // }
+
+    //-------------------Pls help
 
     return (
         <div className="ClassNameBigDiv">
@@ -63,7 +88,7 @@ const MemData = () => {
                             <input
                                 className="form-control mr-sm-2"
                                 type="search"
-                                placeholder="Search"
+                                placeholder={membersOrEvents ? "Search for Members:" : "Search for Events:"}
                                 aria-label="Search"
                             />
                             <button
@@ -98,7 +123,7 @@ const MemData = () => {
                         {/*    This side is for all the available information allowed to see by different users*/}
                         {/*</Form>*/}
                         <div className="card">
-                            <div className="card-header"> {membersOrEvents ? "user.firstname , user.lastname"  : "Events"} </div>
+                            <div className="card-header"> {membersOrEvents ? user.firstname + " " + user.lastname : "Events"} </div>
                             <div className="card-body">
                                 <Row>
                                     <Col>
@@ -113,11 +138,11 @@ const MemData = () => {
                                                 ""}
                                             <br />
                                             {membersOrEvents ?
-                                                "Teir Level:" :
+                                                "Major:" :
                                                 "Participants:"}
                                             <br />
                                             {membersOrEvents ?
-                                                "Attendance Level:" :
+                                                "Academic Year:" :
                                                 ""}
                                         </h5>
                                     </Col>
@@ -125,18 +150,18 @@ const MemData = () => {
                                         <h5 className="card-title" align="left">
                                             {membersOrEvents ?
                                                 user.username :
-                                                events.title}
+                                                event.title }
                                             <br />
                                             {membersOrEvents ?
                                                 user.points :
                                                 ""}
                                             <br />
                                             {membersOrEvents ?
-                                                user.teirLevel :
-                                                ""}
+                                                user.major :
+                                                event.participants}
                                             <br />
                                             {membersOrEvents ?
-                                                user.attendanceLevel :
+                                                user.year :
                                                 ""}
                                         </h5>
                                     </Col>
