@@ -69,6 +69,11 @@ export async function getUser(token) {
     return res;
 }
 
+export async function getEvents() {
+    let res = await fetch('http://www.maxdirocco.com/events');
+    return await res.json();
+}
+
 // --- Event Creation and Attendance--------------------- // -------------------------------------------------------------------------
 
 export async function createEvent(title, description, date, startTime, endTime, password) {
