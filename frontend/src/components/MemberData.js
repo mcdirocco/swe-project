@@ -98,7 +98,7 @@ const MemData = () => {
                         <div className="card">
                             <div className="card-header">{user.firstname} {user.lastname}</div>
                             <div className="card-body">
-                                <Row>
+                                <Row className="sizeTest">
                                     <Col>
                                         <h5 className="card-title" align="left">
                                             Username:

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import {getUser} from "../API";
+import { Row, Col } from "react-bootstrap";
+import './AccountDetails.css'
 
 const AccountDetails = () => {
     let [points, setPoints] = useState(0);
@@ -35,12 +37,19 @@ const AccountDetails = () => {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Current User: {user === undefined ? "Guest" : user.user.firstname + " " + user.user.lastname}</h1>
-                <h2>Email Address: {user === undefined ? "None" : user.user.email}</h2>
-                <h2>Total Points: {points}</h2>
-                <br />
-                <Button href="/landing" onClick={() => {{localStorage.removeItem("name"); localStorage.removeItem("token"); localStorage.setItem("isAdmin", "false")}}} variant={"danger"} className={""}>Logout</Button>
-            </header>
+                <div className="card">
+                    <h5 className="card-header">Hello {user === undefined ? "Guest" : user.user.firstname + " " + user.user.lastname}!</h5>
+                        <div className="card-body">
+                            <Col md={{span: 10, offset: 1}}>
+                                <h4>Email Address: {user === undefined ? "None" : user.user.email}</h4>
+                                <h4>Username: {user === undefined ? "None" : user.user.username} </h4>
+                                <h4>Total Points: {points}</h4>
+                                <br />
+                                <Button href="/landing" onClick={() => {{localStorage.removeItem("name"); localStorage.removeItem("token"); localStorage.setItem("isAdmin", "false")}}} variant={"danger"} className={""}>Logout</Button>
+                            </Col>
+                          </div>
+                      </div>
+                </header>
         </div>
     );
 };

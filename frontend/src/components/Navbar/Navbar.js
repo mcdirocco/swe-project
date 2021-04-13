@@ -23,6 +23,11 @@ const NavbarClass = () => {
             isAdmin = false;
         }
     });
+    let isRefresh = localStorage.getItem("refresh")
+        if( isRefresh == "true"){
+            localStorage.setItem("refresh", "false");
+            window.location.reload(false);
+        }
     let name = localStorage.getItem("name");
     return (
         <Navbar bg="light" expand="lg">

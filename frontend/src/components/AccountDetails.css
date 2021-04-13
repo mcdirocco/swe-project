@@ -1,0 +1,21 @@
+.box{
+    background-color: white;
+    color: black;
+}
+
+.h5{
+    color: black;
+}
+
+.card-header{
+    color: black;
+}
+
+.card-body{
+    color: black;
+}
+
+.card{
+    width: 60%;
+    height: 50%
+}
