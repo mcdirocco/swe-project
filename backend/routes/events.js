@@ -87,12 +87,14 @@ event.post('/attend', async (req, res) => {
         return;
     }
 
+    event.attendeesNames.push(user.firstname + user.lastname);
     event.attendees.push(user._id);
     user.attendedEvents.push(event._id);
 
     const eventAttendee = await Event.updateOne({_id: event._id}, {
         $set: {
             attendees: event.attendees,
+            attendeesNames: event.attendeesNames,
         }
     });
 

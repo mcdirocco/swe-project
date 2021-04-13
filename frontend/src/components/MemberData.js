@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Container, Row, Col, Breadcrumb, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "./MemberData.css";
 import {getUsers, getEvents} from "../API";
 
@@ -11,17 +11,44 @@ const MemData = () => {
     let [event, setEvent] = useState();
     let [membersOrEvents, setMembersOrEvents] = useState(true);
 
+    // Search State Objects
+    let [searchQuery, setSearchQuery] = useState("");
+    let [searchUsers, setSearchUsers] = useState(undefined)
+    let [searchEvents, setSearchEvents] = useState(undefined);
+
     useEffect(async () => {
         let users = await getUsers();
         let events = await getEvents();
         setMembers(users);
+        setSearchUsers(users);
         setUser(users[0]);
         setEvents(events);
+        setSearchEvents(events);
         setEvent(events[0]);
         setIsLoading(false);
     }, []);
 
-
+    const searchHandler = e => {
+        e.preventDefault();
+        if(membersOrEvents) {
+            setSearchUsers(members.filter((i, n) =>
+            {
+                console.log("Search Query: ", searchQuery);
+                return i.firstname.toLowerCase().includes(searchQuery) |
+                       i.lastname.toLowerCase().includes(searchQuery);
+            }));
+            // setUser(searchUsers[0]);
+        }
+        else
+        {
+            setSearchEvents(events.filter((i, n) =>
+            {
+                console.log("Search Query: ", searchQuery);
+                return i.title.toLowerCase().includes(searchQuery);
+            }));
+            // setEvent(searchEvents[0]);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -84,12 +111,13 @@ const MemData = () => {
                 </Row>
                 <Row className="RowSplitPage">
                     <Col>
-                        <Form className="form-inline my-2 my-lg-0">
+                        <Form className="form-inline my-2 my-lg-0" onSubmit={searchHandler}>
                             <input
                                 className="form-control mr-sm-2"
                                 type="search"
                                 placeholder={membersOrEvents ? "Search for Members:" : "Search for Events:"}
                                 aria-label="Search"
+                                onChange={event => setSearchQuery(event.target.value)}
                             />
                             <button
                                 className="btn btn-outline-success my-2 my-sm-0"
@@ -112,8 +140,8 @@ const MemData = () => {
                                 id="exampleFormControlSelect2"
                             >
                                 {membersOrEvents ?
-                                    members.map(user => <option onClick={() => setUser(user)}>{user.lastname}, {user.firstname}</option>) :
-                                    events.map(events => <option onClick={() => setEvent(events)}>{events.title}</option>)}
+                                    searchUsers.map(user => <option onClick={() => setUser(user)}>{user.lastname}, {user.firstname}</option>) :
+                                    searchEvents.map(events => <option onClick={() => setEvent(events)}>{events.title}</option>)}
                             </select>
                         </div>
                         {/*</div>*/}
@@ -126,7 +154,7 @@ const MemData = () => {
                             <div className="card-header"> {membersOrEvents ? user.firstname + " " + user.lastname : "Events"} </div>
                             <div className="card-body">
                                 <Row className="sizeTest">
-                                    <Col>
+                                    <Col md={{span: 4}}>
                                         <h5 className="card-title" align="left">
                                             {membersOrEvents ?
                                                 "Username:" :
@@ -146,7 +174,7 @@ const MemData = () => {
                                                 ""}
                                         </h5>
                                     </Col>
-                                    <Col>
+                                    <Col md={{span: 4}}>
                                         <h5 className="card-title" align="left">
                                             {membersOrEvents ?
                                                 user.username :
@@ -158,7 +186,7 @@ const MemData = () => {
                                             <br />
                                             {membersOrEvents ?
                                                 user.major :
-                                                event.participants}
+                                                event.attendeesNames}
                                             <br />
                                             {membersOrEvents ?
                                                 user.year :
@@ -167,17 +195,17 @@ const MemData = () => {
                                     </Col>
                                 </Row>
                                 <p className="card-text">
-                                    Show personal biography here? Large area for information.
+                                    {/*Show personal biography here? Large area for information.*/}
                                 </p>
                             </div>
                         </div>
                         <br />
-                        <button
-                            className="btn btn-outline-success my-2 my-sm-0"
-                            type="submit"
-                        >
-                            Export to CSV
-                        </button>
+                        {/*<button*/}
+                        {/*    className="btn btn-outline-success my-2 my-sm-0"*/}
+                        {/*    type="submit"*/}
+                        {/*>*/}
+                        {/*    Export to CSV*/}
+                        {/*</button>*/}
                     </Col>
                 </Row>
             </Container>
@@ -186,19 +214,3 @@ const MemData = () => {
 };
 
 export default MemData;
-
-/*
-
-<div style = {{textAlign: 'center', padding: 10}}>
-                  <input type= 'text' value = {this.state.searchTerm} onChange = {this.editSearchTerm} placeholder = 'Search for a name!'/>
-                  <br></br>
-                  <h3>These are the important names:</h3>
-              </div>
-
-
-
-
-
-
-
- */
