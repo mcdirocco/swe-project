@@ -28,3 +28,5 @@ yarn-error.log*
 *.eslintcache
 *.idea
 /frontend/build/
+backend/.env (old)
+/backend/build/
