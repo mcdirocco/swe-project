@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "mocha server.test.js",
-    "build": "TESTVAR=`pwd`; cd ../frontend/; npm run build;"
+    "test": "mocha server.test.js"
   },
   "author": "",
   "license": "ISC",
