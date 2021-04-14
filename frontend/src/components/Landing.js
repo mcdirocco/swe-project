@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
-import { attendEvent, getUser } from "../API";
+import {attendEvent, getEvents, getUser} from "../API";
 
 const localizer = momentLocalizer(moment);
 let code;
@@ -99,17 +99,16 @@ class Landing extends Component {
 
     async componentDidMount() {
         let isRefresh = localStorage.getItem("refresh")
-        if( isRefresh == "true"){
+        if( isRefresh === "true"){
             localStorage.setItem("refresh", "false");
             window.location.reload(false);
         }
-        const response = await fetch("http://www.maxdirocco.com/events");
-        const data = await response.json();
-        console.log(data);
+        const data = await getEvents();
         let token = await localStorage.getItem("token");
         let user = await getUser(token);
         console.log(user.message);
-        if(user.message != "Invalid token recieved!"){
+        if(user.message !== "Invalid token recieved!") {
+            console.log(user.message);
             localStorage.setItem("isAdmin", user.user.admin);
             isAdmin = user.user.admin;
         }
@@ -171,7 +170,7 @@ class Landing extends Component {
                                 />
                             </div>
                         </Col>
-                        {isAdmin == true && <Col md={2}>
+                        {isAdmin === true && <Col md={2}>
                             <div className="buttonCol">
                                 <Button
                                     className="CreateEventButton"

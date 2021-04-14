@@ -3,8 +3,11 @@
 // GLOBAL VARIABLES
 
 // Master request, don't touch this one
+
+const host = 'http://localhost:3001/';
+
 async function request(url, body) {
-    let res = await fetch('http://www.maxdirocco.com/' + url,
+    let res = await fetch(host + url,
         {
             credentials: 'omit',
             headers: {
@@ -52,13 +55,14 @@ export async function loginUser(username, password) {
         "name",
         user.user.firstname
     );
+    localStorage.setItem("isAdmin", user.user.admin);
     return res.token;
 }
 
 // --- Get Member Data ---------------------------------- // -------------------------------------------------------------------------
 
 export async function getUsers() {
-    let res = await fetch('http://www.maxdirocco.com/users');
+    let res = await fetch(host + 'users');
     return await res.json();
 }
 
@@ -70,7 +74,7 @@ export async function getUser(token) {
 }
 
 export async function getEvents() {
-    let res = await fetch('http://www.maxdirocco.com/events');
+    let res = await fetch(host + 'events');
     return await res.json();
 }
 

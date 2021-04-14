@@ -3,6 +3,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import moment from "moment";
+import {createEvent} from "../../API";
 
 class Popup extends React.Component {
   state = {
@@ -20,22 +21,9 @@ class Popup extends React.Component {
     console.log("feet");
     console.log(this.state.start);
     let dateIn = moment(this.state.start);
-    this.setState({ start: dateIn });
-    let res = await fetch("http://www.maxdirocco.com/events/create", {
-      credentials: "omit",
-      headers: {
-        accept: "application/json, text/javascript, */*; q=0.01",
-        "accept-language": "en-US,en;q=0.9",
-        "content-type": "application/json;charset=UTF-8",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "cross-site",
-      },
-      referrerPolicy: "no-referrer-when-downgrade",
-      body: JSON.stringify(this.state),
-      method: "POST", //change to post and add body to add an event
-      mode: "cors",
-    });
-    res = await res.json();
+    await this.setState({ start: dateIn });
+    let res = await createEvent(this.state.title, this.state.description, this.state.date,
+                                this.state.startTime, this.state.endTime, this.state.password);
     console.log(res);
     //window.location.replace("Landing") trying to get the function to reroute
     alert('Event created!');
