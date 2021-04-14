@@ -4,6 +4,10 @@ import cors from 'cors';
 import 'dotenv/config.js';
 import userRoutes from './routes/users.js';
 import eventRoutes from './routes/events.js';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(cors());
@@ -12,15 +16,20 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'build')));
 app.use('/users', userRoutes);
 app.use('/events', eventRoutes);
 
 
 // --- Routes ---
 
-app.get('/', (req, res) => {
-    res.json({message: 'API Home'});
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+//app.get('/', (req, res) => {
+//    res.json({message: 'API Home'});
+//});
 
 // --- Connect to MongoDB ---
 
@@ -31,4 +40,3 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedT
 // --- Listen On Port 3001 ---
 
 app.listen(3001);
-
