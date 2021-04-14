@@ -4,7 +4,7 @@
 
 // Master request, don't touch this one
 
-const host = 'http://localhost:3001/';
+const host = 'https://swe-at.herokuapp.com/';
 
 async function request(url, body) {
     let res = await fetch(host + url,
