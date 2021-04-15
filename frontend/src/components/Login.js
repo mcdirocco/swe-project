@@ -15,7 +15,7 @@ const Login = () => {
     let [username, setUsername] = useState("");
     let [password, setPassword] = useState("");
 
-   
+
 
     let [firstNameSI, setFirstNameSI] = useState("");
     let [lastNameSI, setLastNameSI] = useState("");
@@ -60,7 +60,6 @@ const Login = () => {
         }
         else {
             let TOKEN = await createUser(firstNameSI, lastNameSI, usernameSI, passwordSI, emailSI, majorSI, yearSI);
-            console.log(TOKEN); // Check wtf this is
             alert(TOKEN.firstname !== undefined ? "New User Created!\nFirstName: " +
                 TOKEN.firstname + "\nLastName: " + TOKEN.lastname + "\nUsername: " +
                 TOKEN.username + "\nEmail: " + TOKEN.email : "User already exists!");
@@ -83,9 +82,9 @@ const Login = () => {
                           <div className="card-body">
                               <Col md={{span: 6, offset: 3}}>
                                   <Form.Label>Username</Form.Label>
-                                  <Form.Control type="formBasicText" placeholder="Username" onChange={e => {setUsername(e.target.value); console.log(username)}} />
+                                  <Form.Control type="formBasicText" placeholder="Username" onChange={e => setUsername(e.target.value)} />
                                   <Form.Label>Password</Form.Label>
-                                  <Form.Control type="password" placeholder="Password" onChange={e => {setPassword(e.target.value)}}/>
+                                  <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
                               </Col>
                           </div>
                       </div>

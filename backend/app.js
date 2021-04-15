@@ -1,6 +1,5 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';
 import 'dotenv/config.js';
 import userRoutes from './routes/users.js';
 import eventRoutes from './routes/events.js';
@@ -8,6 +7,8 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+let cors = require('cors');
 
 const app = express();
 app.use(cors());
