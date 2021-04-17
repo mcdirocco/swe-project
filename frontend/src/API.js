@@ -1,8 +1,13 @@
 // This file serves as an index for all available API calls, broken down into easy to use functions.
 
+// GLOBAL VARIABLES
+
 // Master request, don't touch this one
+
+const hostUrl = 'https://swe-at.herokuapp.com/';
+
 async function request(url, body) {
-    let res = await fetch('http://localhost:3001/' + url,
+    let res = await fetch(hostUrl + url,
         {
             credentials: 'omit',
             headers: {
@@ -24,18 +29,73 @@ async function request(url, body) {
 
 // --- User Creation and Authentication --- // -------------------------------------------------------------------------
 
-export async function createUser(/* TODO */) {
-    return await request('users/create', {/* TODO */});
+export async function createUser(firstname, lastname, username, password, email, major, year) {
+    return await request('users/create', {
+        firstname: firstname,   // type: String
+        lastname: lastname,     // type: String
+        username: username,     // type: String
+        password: password,     // type: String
+        email: email,           // type: String
+        major: major,           // type: String
+        year: year,             // type: String
+    });
 }
 
-// --- Event Creation --------------------- // -------------------------------------------------------------------------
+export async function loginUser(username, password) {
+    let res = await request('users/login', {
+        username: username,
+        password: password
+    });
+    if(res.token === undefined) {
+        return false;
+    }
+    localStorage.setItem("token", res.token);
+    let user = await getUser(res.token);
+    localStorage.setItem(
+        "name",
+        user.user.firstname
+    );
+    localStorage.setItem("isAdmin", user.user.admin);
+    return res.token;
+}
 
-export async function createEvent(title, description, date, startTime, endTime) {
+// --- Get Member Data ---------------------------------- // -------------------------------------------------------------------------
+
+export async function getUsers() {
+    let res = await fetch(hostUrl + 'users');
+    return await res.json();
+}
+
+export async function getUser(token) {
+    let res = await request('users/getUser', {
+        token: token,
+    });
+    return res;
+}
+
+export async function getEvents() {
+    let res = await fetch(hostUrl + 'events');
+    return await res.json();
+}
+
+// --- Event Creation and Attendance--------------------- // -------------------------------------------------------------------------
+
+export async function createEvent(title, description, date, startTime, endTime, password) {
     return await request('events/create',{
-        title: title,
-        description: description,
-        date: date,
-        startTime: startTime,
-        endTime: endTime,
+        title: title,               // type: String
+        description: description,   // type: String
+        date: date,                 // type: Date
+        startTime: startTime,       // type: String
+        endTime: endTime,           // type: String
+        password: password,         // type: String
+    });
+}
+
+export async function attendEvent(token, eventID, password) {
+    console.log(token, eventID, password);
+    return await request('events/attend', {
+        token: token,               // type: String
+        eventID: eventID,           // type: String
+        password: password          // type: String
     });
 }

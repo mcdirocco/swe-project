@@ -50,6 +50,10 @@
     width: 10%;
 }
 
+.NavbarWelcome {
+    color: #5a5377;
+}
+
 /*
 make the options for links to across the top bar, and so that there is a little bit of
     white around them so they don't look constricted

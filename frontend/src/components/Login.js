@@ -1,83 +1,141 @@
+import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Breadcrumb, Form, Button } from "react-bootstrap";
 import "./Login.css"
+import {createUser, loginUser} from "../API";
+import {Redirect} from "react-router-dom";
+
+// async function submission(username, password) {
+//     console.log("kms");
+//
+// }
 
 const Login = () => {
+    let [redirect, setRedirect] = useState(false);
+
+    let [username, setUsername] = useState("");
+    let [password, setPassword] = useState("");
+
+
+
+    let [firstNameSI, setFirstNameSI] = useState("");
+    let [lastNameSI, setLastNameSI] = useState("");
+    let [usernameSI, setUsernameSI] = useState("");
+    let [passwordSI, setPasswordSI] = useState("");
+    let [emailSI, setEmailSI] = useState("");
+    let [confirmPassSI, setConfirmPassSI] = useState("");
+    let [majorSI, setMajorSI] = useState("");
+    let [yearSI, setYearSI] = useState("");
+
+    // ---------------------------- //
+
+    useEffect(() => {
+        // let value = Math.round((Math.random() * 1000)).toString()
+        // setFirstNameSI("Jane");
+        // setLastNameSI("Smith");
+        // setUsernameSI("jsmith" + value.toString());
+        // setEmailSI("jsmith" + value.toString() + "@gmail.com");
+        // setPasswordSI("password");
+        // setConfirmPassSI("password");
+        // setMajorSI("Engineering");
+        // setYearSI((Math.round(Math.random() * 5).toString()));
+    }, []);
+
+    const submission = async (e) => {
+        e.preventDefault();
+        let TOKEN = await loginUser(username, password);
+        if (TOKEN === false){
+            alert("Incorrect username or password!");
+            return;
+        }
+        localStorage.setItem("token", TOKEN);
+        localStorage.setItem("refresh", "true");
+        setRedirect(true);
+    };
+
+    const submissionSI = async (e) => {
+        e.preventDefault();
+        if(passwordSI !== confirmPassSI) {
+            alert('Make sure your passwords match!');
+            return;
+        }
+        else {
+            let TOKEN = await createUser(firstNameSI, lastNameSI, usernameSI, passwordSI, emailSI, majorSI, yearSI);
+            alert(TOKEN.firstname !== undefined ? "New User Created!\nFirstName: " +
+                TOKEN.firstname + "\nLastName: " + TOKEN.lastname + "\nUsername: " +
+                TOKEN.username + "\nEmail: " + TOKEN.email : "User already exists!");
+            if(TOKEN.firstname !== undefined) {
+                let TOKEN = await loginUser(usernameSI, passwordSI);
+                localStorage.setItem("token", TOKEN);
+                localStorage.setItem("refresh", "true");
+                setRedirect(true);
+            }
+        }
+    };
+
     return (
       <div className="LoginClassName">
           <Container>
-              <Row className="TopLoginRow" xs={4}>
-                  <Col className="LeftLoginCol" md={{span: 3, offset: 2}}>
-                      <p style={{color: "white"}}>Login Component</p>
-                      <Form>
+              <Row className="TopLoginRow">
+                  <Col className="LeftLoginCol" md={{span: 6}}>   {/*md={{span: 3, offset: 2}}*/}
+                      <div className="card">
+                          <h5 className="card-header">Log In</h5>
+                          <div className="card-body">
+                              <Col md={{span: 6, offset: 3}}>
+                                  <Form.Label>Username</Form.Label>
+                                  <Form.Control type="formBasicText" placeholder="Username" onChange={e => setUsername(e.target.value)} />
+                                  <Form.Label>Password</Form.Label>
+                                  <Form.Control type="password" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+                              </Col>
+                          </div>
+                      </div>
+                      <Form className="FormGroupLeft" onSubmit={submission}>
                           <Form.Group>
-                              <Form.Label>Username/Email</Form.Label>
-                              <Form.Control type="email" placeholder="Username or Email" />
-                              <Form.Text className="text-muted" >
-                                  Space out the form.control units.
-                              </Form.Text>
-                              <Form.Label>Password</Form.Label>
-                              <Form.Control type="password" placeholder="Password" />
-                              <Form.Text>
-                                  Put a border in the middle!
-                              </Form.Text>
-                              <Button variant="primary" className="btn btn-block">Login</Button>
-                              <p className="forgot-password text-right">Forgot <a href="#">Password?</a></p>
+                              <Button variant="primary" className="btn btn-block btn-dope" type="submit">Login</Button>
+                              <p className="forgot-password text-right forgotPass"> <a href="#" className="ForgotPass" >Forgot Password?</a></p>
                           </Form.Group>
                       </Form>
                   </Col>
-                  <Col className="RightLoginCol" md={{span: 3, offset: 2}}>
-                      <p style={{color: "white"}}>Sign Up Component</p>
-                      <Form className="FormGroupRight">
-                          <Form.Group>
-                              <Form.Label>First Name</Form.Label>
-                              <Form.Control type="formBasicText" placeholder="First Name"/>
-                              <Form.Label>Last Name</Form.Label>
-                              <Form.Control type="formBasicText" placeholder="Last Name"/>
-                              <Form.Label>Username</Form.Label>
-                              <Form.Control type="formBasicText" placeholder="Username" />
-                              <Form.Label>Email</Form.Label>
-                              <Form.Control type="email" placeholder="Email" />
-                              <Form.Label>Password</Form.Label>
-                              <Form.Control type="password" placeholder="Password" />
-                              <Form.Label>Password Confirmation</Form.Label>
-                              <Form.Control type="password" placeholder="Confirm Your Password" />
-                              <Form.Label>Degree Major</Form.Label>
-                              <Form.Control type="formBasicText" placeholder="Degree Major"/>
-                              <Form.Label>Current Academic Year</Form.Label>
-                              <Form.Control type="formBasicText" placeholder="Current Academic Year"/>
-                              <Form.Text>
-                                  Put a button below me!
-                              </Form.Text>
-                              <Button variant="primary" className="btn btn-block">Sign Up</Button>
-                          </Form.Group>
+
+
+                  <Col className="RightLoginCol" md={{span: 6}}>
+                      <div className="card">
+                          <h5 className="card-header">Sign Up</h5>
+                          <div className="card-body">
+                          <Form className="FormGroupRight">
+                              <Row>
+                              <Col md={{span: 6}}>
+                                  <Form.Label>First Name</Form.Label>
+                                  <Form.Control type="formBasicText" value={firstNameSI} placeholder="First Name" onChange={e => {setFirstNameSI(e.target.value)}}/>
+                                  <Form.Label>Last Name</Form.Label>
+                                  <Form.Control type="formBasicText" value={lastNameSI} placeholder="Last Name" onChange={e => {setLastNameSI(e.target.value)}}/>
+                                  <Form.Label>Username</Form.Label>
+                                  <Form.Control type="formBasicText" value={usernameSI} placeholder="Username" onChange={e => {setUsernameSI(e.target.value)}}/>
+                                  <Form.Label>Email</Form.Label>
+                                  <Form.Control type="email" value={emailSI} placeholder="Email" onChange={e => {setEmailSI(e.target.value)}}/>
+                              </Col>
+                              <Col md={{span: 6}}>
+                                  <Form.Label>Password</Form.Label>
+                                  <Form.Control type="password" value={passwordSI} placeholder="Password" onChange={e => {setPasswordSI(e.target.value)}}/>
+                                  <Form.Label>Password Confirmation</Form.Label>
+                                  <Form.Control type="password" value={confirmPassSI} placeholder="Confirm Your Password" onChange={e => {setConfirmPassSI(e.target.value)}}/>
+                                  <Form.Label>Degree Major</Form.Label>
+                                  <Form.Control type="formBasicText" value={majorSI} placeholder="Degree Major"onChange={e => {setMajorSI(e.target.value)}} />
+                                  <Form.Label>Current Academic Year</Form.Label>
+                                  <Form.Control type="formBasicText" value={yearSI} placeholder="Current Academic Year" onChange={e => {setYearSI(e.target.value)}}/>
+                              </Col>
+                              </Row>
+                          </Form>
+                          </div>
+                      </div>
+                      <Form onSubmit={submissionSI}>
+                        <Button type="submit" variant="primary" className="btn btn-block btn-dope">Sign Up</Button>
                       </Form>
-                  </Col>
+                      </Col>
               </Row>
           </Container>
+          {redirect && <Redirect to="/landing" />}
       </div>
     );
   }
 
-  export default Login;
-
-/*
-  <header className="App-header">
-      Login Comp | Signup Comp
-      <h2 >I now know why I am purple @App.css </h2>
-  </header>
-
-  <Breadcrumb className="justify-content-end">
-      <Breadcrumb.Item>Forgot Password?</Breadcrumb.Item>
-  </Breadcrumb>
-
-
-
-
-
-
-
-
-
-
-
- */
+export default Login;

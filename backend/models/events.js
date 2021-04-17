@@ -29,6 +29,10 @@ const EventSchema = mongoose.Schema({
         type: Array,
         default: [],
     },
+    attendeesNames: {
+        type: Array,
+        default: [],
+    },
 });
 
 export default mongoose.model('Events', EventSchema);

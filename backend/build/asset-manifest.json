@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c1282794.chunk.css",
+    "main.js": "/static/js/main.ead5f42b.chunk.js",
+    "main.js.map": "/static/js/main.ead5f42b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.92ae0267.js",
+    "runtime-main.js.map": "/static/js/runtime-main.92ae0267.js.map",
+    "static/css/2.a697c562.chunk.css": "/static/css/2.a697c562.chunk.css",
+    "static/js/2.f1829f48.chunk.js": "/static/js/2.f1829f48.chunk.js",
+    "static/js/2.f1829f48.chunk.js.map": "/static/js/2.f1829f48.chunk.js.map",
+    "static/js/3.2aa88b51.chunk.js": "/static/js/3.2aa88b51.chunk.js",
+    "static/js/3.2aa88b51.chunk.js.map": "/static/js/3.2aa88b51.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.a697c562.chunk.css.map": "/static/css/2.a697c562.chunk.css.map",
+    "static/css/main.c1282794.chunk.css.map": "/static/css/main.c1282794.chunk.css.map",
+    "static/js/2.f1829f48.chunk.js.LICENSE.txt": "/static/js/2.f1829f48.chunk.js.LICENSE.txt",
+    "static/media/Navbar.css": "/static/media/background_1.ce9114de.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.92ae0267.js",
+    "static/css/2.a697c562.chunk.css",
+    "static/js/2.f1829f48.chunk.js",
+    "static/css/main.c1282794.chunk.css",
+    "static/js/main.ead5f42b.chunk.js"
+  ]
+}

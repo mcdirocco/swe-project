@@ -1,172 +1,191 @@
-import React, { Component } from 'react'
-import Popup from 'reactjs-popup';
-import { Calendar, momentLocalizer} from 'react-big-calendar'
+import React, { Component } from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import CreateEvent from './CreateEvent/CreateEvent';
-import './Landing.css';
-import {Overlay} from 'react-bootstrap';
-import {OverlayTrigger} from 'react-bootstrap';
-import {Popover} from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form' 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col } from 'react-bootstrap';
+import "./Landing.css";
+import { OverlayTrigger } from "react-bootstrap";
+import { Popover } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Row, Col } from "react-bootstrap";
+import {attendEvent, getEvents, getUser} from "../API";
+
 const localizer = momentLocalizer(moment);
 let code;
-let eventVar;
-function submitFunc(code){
- //place the PUT request here
- console.log(code)
- console.log(eventVar)
- //append array
- //then push it to server
+let eventVar = {
+    id: "",
+};
+let isAdmin = false;
+
+async function submitFunc(e) {
+    e.preventDefault();
+    //place the PUT request here
+    if(code === undefined) {
+        return;
+    }
+    let token = await localStorage.getItem("token");
+    let user = await getUser(token);
+    console.log(token, eventVar.id, code);
+    await attendEvent(token, eventVar.id, code);
+    alert('Event attended!');
+
+    //do the attend event functions
+    //then push it to server
 }
 
 function Event({ event }) {
-  let popoverClickRootClose = (
-    <Popover id="popover-trigger-click-root-close" style={{ zIndex: 10000 }}>
-      <Modal.Dialog>
-        <Modal.Header closeButton>
-          <Modal.Title>Sign In Here</Modal.Title>
-        </Modal.Header>
+    let popoverClickRootClose = (
+        <Popover id="popover-trigger-click-root-close" style={{ zIndex: 10000 }}>
+            <Modal.Dialog>
+                    <Modal.Title>Sign In Here</Modal.Title>
 
-        <Modal.Body>
-            <Form onSubmit = {submitFunc(code)}>
-              <Form.Group controlId="formBasicDescription">
-                <Form.Label>Enter Event Code Here!</Form.Label>
-                  <Form.Control type="String" onChange={e => code = e.target.value}></Form.Control>
-              </Form.Group>
-            </Form>
-        </Modal.Body>
+                <Modal.Body>
+                    <Form onSubmit={submitFunc}>
+                        <Form.Group controlId="formBasicDescription">
+                            <Form.Label>Enter Event Code Here!</Form.Label>
+                            <Form.Control
+                                type="String"
+                                onChange={(e) => {code = e.target.value}}
+                            />
+                        </Form.Group>
+                        <Button type="submit" variant="primary">
+                            Submit
+                        </Button>
+                    </Form>
+                </Modal.Body>
 
-        <Modal.Footer>
-          <Button variant="secondary">Close</Button>
-          <Button variant="primary">Submit</Button>
-        </Modal.Footer>
-      </Modal.Dialog>
-    </Popover>
-  );
+                {/*<Modal.Footer>*/}
+                {/*    */}
+                {/*</Modal.Footer>*/}
+            </Modal.Dialog>
+        </Popover>
+    );
 
-  console.log(event);
-  eventVar = event;
-  return (
-    <div>
-      <div>
-        <OverlayTrigger id="help" trigger="click" rootClose container={this} placement="bottom" overlay={popoverClickRootClose}>
-          <div>{event.title}</div>
-        </OverlayTrigger>
-      </div>
-    </div>
-  );
+    eventVar = event;
+    return (
+        <div>
+            <div>
+                <OverlayTrigger
+                    id="help"
+                    trigger="click"
+                    rootClose
+                    container={this}
+                    placement="bottom"
+                    overlay={popoverClickRootClose}
+                >
+                    <div>{event.title}</div>
+                </OverlayTrigger>
+            </div>
+        </div>
+    );
 }
-
-
 
 class Landing extends Component {
-  onSignIn = async (e) => {
-    e.preventDefault();
-    console.log(e)
-    //this.setState({start: dateIn})
-    let res = await fetch(
-      'http://www.maxdirocco.com/events/create',
-      {
-        credentials: 'omit',
-        headers: {
-          accept: 'application/json, text/javascript, */*; q=0.01',
-          'accept-language': 'en-US,en;q=0.9',
-          'content-type': 'application/json;charset=UTF-8',
-          'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'cross-site',
-        },
-        referrerPolicy: 'no-referrer-when-downgrade',
-        body: JSON.stringify(this.state),
-        method: 'POST', //change to post and add body to add an event
-        mode: 'cors',
-      },
-    );
-    res = await res.json();  
-    console.log(res);
-  }
+    //add the events from DB in here
+    state = {
+        seen: false,
+        events: [
+            {
+                id: String,
+                title: String,
+                start: Date,
+                end: Date,
+            },
+        ],
+        loaded: false,
+    };
+
+    async componentDidMount() {
+        let isRefresh = localStorage.getItem("refresh")
+        if( isRefresh === "true"){
+            localStorage.setItem("refresh", "false");
+            window.location.reload(false);
+        }
+        const data = await getEvents();
+        let token = await localStorage.getItem("token");
+        let user = await getUser(token);
+        console.log(user.message);
+        if(user.message !== "Invalid token recieved!") {
+            console.log(user.message);
+            localStorage.setItem("isAdmin", user.user.admin);
+            isAdmin = user.user.admin;
+        }
+        // let token = localStorage.getItem("Token");
+        // if (token === null) {
+        //     localStorage.setItem("name", "Guest");
+        // }
+        for (let i = 0; i < data.length; i++) {
+            this.state.events[i] = {};
+            let dateObj = new Date(data[i].date);
+            console.log(dateObj);
+            let year = dateObj.getFullYear();
+            let month = dateObj.getMonth();
+            let day = dateObj.getDate() + 1;
+            this.state.events[i].start = new Date(year, month, day);
+            this.state.events[i].end = new Date(year, month, day);
+            this.state.events[i].title = data[i].title;
+            this.state.events[i].attendees = data[i].attendees;
+            this.state.events[i].id = data[i]._id;
+            console.log(this.state.events[i].id);
+        }
 
 
-  //add the events from DB in here
-  state = {
-    seen: false,
-    events: [
-      {
-          id: undefined,
-          title: String,
-          start: Date,
-          end: Date,
-      },
-      {
-          title: "Yay",
-          start: new Date(2021, 2, 8),
-          end: new Date(2021, 2, 9)
-      }
-      
-    ]
-  };
-
-  
-  async componentDidMount(){
-    localStorage.setItem("name", "Emily")
-    const response = await fetch('http://www.maxdirocco.com/events');
-    const data = await response.json();
-    console.log(data)
-    for(var i=0; i < data.length; i++){
-      this.state.events[i] = new Object();
-      var dateObj = new Date(data[i].date);
-      console.log(dateObj)
-      var year = dateObj.getFullYear();
-      var month = dateObj.getMonth();
-      var day = dateObj.getDate() + 1;
-      this.state.events[i].id = data._id;
-      this.state.events[i].start = new Date(year, month, day);
-      this.state.events[i].end = new Date(year, month, day);
-      this.state.events[i].title = data[i].title;
-      this.state.events[i].attendees = data[i].attendees;
-      console.log(this.state.events)
+        await this.setState({ loaded: true });
     }
-}
 
-
-  render() {
-    return (
-      <div className="App">
-        <Container fluid>
-          <Row>
-            <Col md={10}>
-        <div>
-        <Calendar
-          localizer={localizer}
-          defaultDate={new Date}
-          defaultView="month"
-          events={this.state.events}
-          style={{ display: "flex", margin: "3vh", padding: "2vh", borderRadius: '2vh', height: "100vh", backgroundColor: "#EEEEEE"}}
-          components={{
-            event: Event
-          }}
-        />
-
-
-        </div>
-        </Col>
-        <Col md={2} >
-          <div className="buttonCol">
-          <Button className='CreateEventButton' href='/CreateEvent' color="primary">Create an Event</Button>
-          </div>
-        </Col>
-        </Row>
-       </Container>
-         
-          
-      </div>
-            
-    );
-  }
+    render() {
+        if (!this.state.loaded) {
+            return (
+                <div className="App">
+                    <Container fluid>
+                        <h1 style={{ height: "100vh", color: "white" }}>Loading...</h1>
+                    </Container>
+                </div>
+            );
+        }
+        return (
+            <div className="App">
+                <Container fluid>
+                    <Row>
+                        <Col md={12}>
+                            <div>
+                                <Calendar
+                                    localizer={localizer}
+                                    defaultDate={new Date()}
+                                    defaultView="month"
+                                    events={this.state.events}
+                                    style={{
+                                        display: "flex",
+                                        margin: "3vh",
+                                        padding: "2vh",
+                                        borderRadius: "2vh",
+                                        height: "100vh",
+                                        backgroundColor: "#EEEEEE",
+                                    }}
+                                    components={{
+                                        event: Event,
+                                    }}
+                                />
+                            </div>
+                        </Col>
+                        {isAdmin === true && <Col md={2}>
+                            <div className="buttonCol">
+                                <Button
+                                    className="CreateEventButton"
+                                    href="/CreateEvent"
+                                    color="primary"
+                                >
+                                    Create an Event
+                                </Button>
+                            </div>
+                        </Col>}
+                    </Row>
+                </Container>
+            </div>
+        );
+    }
 }
 
 export default Landing;
