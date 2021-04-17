@@ -186,7 +186,7 @@ const MemData = () => {
                                             <br />
                                             {membersOrEvents ?
                                                 user.major :
-                                                event.attendeesNames}
+                                                event.attendeesNames.map(name => {return name + "\n"})}
                                             <br />
                                             {membersOrEvents ?
                                                 user.year :

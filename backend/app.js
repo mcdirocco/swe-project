@@ -9,8 +9,17 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+
 const app = express();
 app.use(cors());
+
+app.use("*", async (req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://swe-at.herokuapp.com/")
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
+    res.setHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization")
+    res.setHeader("Access-Control-Allow-Credentials", true)
+    next();
+});
 
 // --- Middlewares ---
 
@@ -39,4 +48,4 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedT
 
 // --- Listen On Port 3001 ---
 
-app.listen(3001);
+app.listen(process.env.PORT || 3000);

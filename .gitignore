@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+#/build
 
 # misc
 */.idea
@@ -27,6 +27,5 @@ yarn-error.log*
 *.iml
 *.eslintcache
 *.idea
-/frontend/build/
+#/backend/build/
 backend/.env (old)
-/backend/build/

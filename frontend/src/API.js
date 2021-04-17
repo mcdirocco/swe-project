@@ -4,10 +4,10 @@
 
 // Master request, don't touch this one
 
-const host = 'http://localhost:3001/';
+const hostUrl = 'https://swe-at.herokuapp.com/';
 
 async function request(url, body) {
-    let res = await fetch(host + url,
+    let res = await fetch(hostUrl + url,
         {
             credentials: 'omit',
             headers: {
@@ -62,7 +62,7 @@ export async function loginUser(username, password) {
 // --- Get Member Data ---------------------------------- // -------------------------------------------------------------------------
 
 export async function getUsers() {
-    let res = await fetch(host + 'users');
+    let res = await fetch(hostUrl + 'users');
     return await res.json();
 }
 
@@ -74,7 +74,7 @@ export async function getUser(token) {
 }
 
 export async function getEvents() {
-    let res = await fetch(host + 'events');
+    let res = await fetch(hostUrl + 'events');
     return await res.json();
 }
 
