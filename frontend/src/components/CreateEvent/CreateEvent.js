@@ -13,7 +13,7 @@ class Popup extends React.Component {
     end: undefined,
     startTime: undefined,
     endTime: undefined,
-    password: "1234",
+    password: "",
   };
   //GENERATE RANDOM CODE TO BE DISPLAYED
   onSubmit = async (e) => {
@@ -88,7 +88,7 @@ class Popup extends React.Component {
                   </Form.Group>
 
                   <Form.Group controlId="formBasicDescription">
-                    <Form.Label>password</Form.Label>
+                    <Form.Label>Password</Form.Label>
                     <Form.Control
                         type="string"
                         value={this.state.password}
